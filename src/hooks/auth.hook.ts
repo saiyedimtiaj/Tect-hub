@@ -1,5 +1,5 @@
-import { createUser, logInUser } from "@/services/auth.services";
-import { TCreateUser, TLoginUser } from "@/types";
+import { createUser, logInUser, updateUser } from "@/services/auth.services";
+import { TCreateUser, TLoginUser, TUser } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -23,6 +23,20 @@ export const useUserLogin = () => {
       toast.success(data?.message);
     },
     onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+
+export const useUpdateUser = () => {
+  return useMutation({
+    mutationKey: ["USER_LOGIN"],
+    mutationFn: async (userData: any) => await updateUser(userData),
+    onSuccess: (data) => {
+      toast.success(data?.message);
+    },
+    onError: (error) => {
+      console.log(error);
       toast.error(error.message);
     },
   });

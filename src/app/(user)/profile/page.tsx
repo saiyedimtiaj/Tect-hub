@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import banner from "../../../../public/assets/cover.jpg";
 import UserInfoLarge from "@/components/profile/UserInfoLarge";
-import AddPost from "@/components/profile/AddPost";
+import MyPost from "@/components/profile/MyPost";
 
 const Page = () => {
 
@@ -20,7 +20,8 @@ const Page = () => {
                 />
                 <UserInfoLarge />
             </div>
-            <div className="mt-72 mb-20">
+            <div className="mt-16 mb-20">
+                <MyPost />
                 <h1 className="text-3xl font-bold text-center">No Post Create</h1>
             </div>
         </div>

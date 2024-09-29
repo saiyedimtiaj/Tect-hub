@@ -6,13 +6,15 @@ import { MdModeEditOutline } from "react-icons/md";
 import { Button } from '../ui/button';
 import { FaPlus } from "react-icons/fa6";
 import EditProfile from '../Modal/EditProfile';
+import AddPost from '../Modal/AddPost';
 
 const UserInfoLarge: React.FC = () => {
     const { user } = useUser();
     const [isEditProfileOpen, setEditProfileOpen] = useState<boolean>(false);
+    const [isPostOpen, setIsPostOpen] = useState<boolean>(false);
 
     return (
-        <div className="absolute -mt-16 flex flex-col items-center w-full">
+        <div className="-mt-16 flex flex-col items-center w-full">
             {/* Profile Image */}
             <Image
                 width={150}
@@ -26,6 +28,9 @@ const UserInfoLarge: React.FC = () => {
                 {/* User Info */}
                 <div className="text-center sm:text-left">
                     <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 pb-2">{user?.name || "User Name"}</h1>
+                    <p className='text-center md:text-left max-w-[400px] mb-5'>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est error qui nihil natus sequi? Culpa!
+                    </p>
 
                     <div className="flex justify-center sm:justify-start items-center gap-8 mt-2">
                         <div className="flex flex-col items-center">
@@ -52,13 +57,14 @@ const UserInfoLarge: React.FC = () => {
                         <MdModeEditOutline size={19} />
                         Edit Profile
                     </button>
-                    <button className="gap-2 font-semibold py-2 px-4 md:py-2.5 md:px-5 rounded-lg flex items-center bg-purple-600 text-white text-xs md:text-lg">
+                    <button onClick={() => setIsPostOpen(true)} className="gap-2 font-semibold py-2 px-4 md:py-2.5 md:px-5 rounded-lg flex items-center bg-purple-600 text-white text-xs md:text-lg">
                         <FaPlus size={19} />
                         Add Post
                     </button>
                 </div>
             </div>
             <EditProfile isOpen={isEditProfileOpen} onOpenChange={setEditProfileOpen} />
+            <AddPost isOpen={isPostOpen} onOpenChange={setIsPostOpen} />
         </div>
     );
 };

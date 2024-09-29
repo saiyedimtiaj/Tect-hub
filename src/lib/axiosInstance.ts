@@ -6,9 +6,10 @@ import { cookies } from "next/headers";
 
 const axiosInstance = axios.create({
   baseURL: envConfig.baseApi,
+  withCredentials: true,
 });
 
-axios.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   function (config) {
     const accessToken = cookies().get("accessToken")?.value;
     if (accessToken) {
@@ -21,7 +22,7 @@ axios.interceptors.request.use(
   }
 );
 
-axios.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   function (response) {
     return response;
   },

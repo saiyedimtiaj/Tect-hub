@@ -1,6 +1,6 @@
 "use server";
 import axiosInstance from "@/lib/axiosInstance";
-import { TCreateUser, TLoginUser } from "@/types";
+import { TCreateUser, TLoginUser, TUser } from "@/types";
 import { cookies } from "next/headers";
 import { jwtDecode } from "jwt-decode";
 
@@ -60,4 +60,18 @@ export const getCurrentUser = async () => {
 export const logoutUser = async () => {
   cookies().delete("accessToken");
   cookies().delete("refreshToken");
+};
+
+export const updateUser = async (userData: any) => {
+  try {
+    console.log(userData);
+    const { data } = await axiosInstance.put(
+      `/auth/update-user/${userData?._id}`,
+      userData
+    );
+    return data;
+  } catch (err: any) {
+    console.log(err);
+    throw new Error(err);
+  }
 };

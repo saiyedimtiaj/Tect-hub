@@ -16,4 +16,14 @@ export type TUser = {
   profile: string;
   iat: number;
   exp: number;
+  bio: string;
 };
+
+export interface IPost {
+  content: string;
+  userId?: string;
+  images: string[];
+  category: string;
+  type: string;
+  _id?: string;
+}
