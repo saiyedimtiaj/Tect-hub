@@ -4,13 +4,16 @@ import {
     QueryClient,
     QueryClientProvider
 } from '@tanstack/react-query'
+import UserProvider from '@/provider/user.provider'
 
 const queryClient = new QueryClient()
 
 const Providers = ({ children }: { children: ReactNode }) => {
     return (
         <QueryClientProvider client={queryClient}>
-            {children}
+            <UserProvider>
+                {children}
+            </UserProvider>
         </QueryClientProvider>
     )
 }

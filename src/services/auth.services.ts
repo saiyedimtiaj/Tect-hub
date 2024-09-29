@@ -2,6 +2,7 @@
 import axiosInstance from "@/lib/axiosInstance";
 import { TCreateUser, TLoginUser } from "@/types";
 import { cookies } from "next/headers";
+import { jwtDecode } from "jwt-decode";
 
 export const createUser = async (userData: TCreateUser) => {
   try {
@@ -44,4 +45,19 @@ export const getNewAccessToken = async () => {
   } catch (err: any) {
     throw new Error(err);
   }
+};
+
+export const getCurrentUser = async () => {
+  const accessToken = cookies().get("accessToken")?.value;
+  let decodedToken = null;
+  if (accessToken) {
+    decodedToken = await jwtDecode(accessToken);
+    return decodedToken;
+  }
+  return decodedToken;
+};
+
+export const logoutUser = async () => {
+  cookies().delete("accessToken");
+  cookies().delete("refreshToken");
 };

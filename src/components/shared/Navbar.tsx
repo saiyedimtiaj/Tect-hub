@@ -1,9 +1,28 @@
+"use client"
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { JSX, SVGProps } from "react";
+import { useUser } from "@/provider/user.provider";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import Image from "next/image";
+import { logoutUser } from "@/services/auth.services";
 
 export default function Navbar() {
+    const { user, setIsLoading } = useUser();
+
+    const handleLogout = async () => {
+        await logoutUser()
+        setIsLoading(true)
+    }
+
     return (
         <header className="flex justify-between container mx-auto h-20 w-full items-center px-4">
             {/* Logo / Brand */}
@@ -31,13 +50,44 @@ export default function Navbar() {
 
             {/* Sign In button - Desktop */}
             <div className="hidden lg:block">
-                <Link href="/signin">
-                    <Button>Sign In</Button>
-                </Link>
+                {
+                    user ? <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                className="overflow-hidden rounded-full"
+                            >
+                                <Image
+                                    src={user?.profile}
+                                    width={36}
+                                    height={36}
+                                    alt="Avatar"
+                                    className="overflow-hidden rounded-full"
+                                />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <div className="px-2 py-1">
+                                <h1 className="font-semibold">{user?.name}</h1>
+                                <p className="text-xs">{user?.email}</p>
+                            </div>
+
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                                <Link href='/profile'>Profile</Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu> : <Link href="/signin">
+                        <Button>Sign In</Button>
+                    </Link>
+                }
             </div>
 
             {/* Mobile Navigation - Sheet */}
-            <div>
+            <div className="flex items-center gap-3">
                 <Sheet>
                     <SheetTrigger asChild>
                         <Button variant="outline" size="icon" className="lg:hidden">
@@ -56,13 +106,45 @@ export default function Navbar() {
                                     {item}
                                 </Link>
                             ))}
-                            {/* Sign In button - Mobile */}
-                            <Link href="/signin" className="mt-4">
-                                <Button className="w-full">Sign In</Button>
-                            </Link>
+
                         </div>
                     </SheetContent>
                 </Sheet>
+                <div className="block lg:hidden">
+                    {
+                        user ? <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button
+                                    variant="outline"
+                                    size="icon"
+                                    className="overflow-hidden rounded-full"
+                                >
+                                    <Image
+                                        src={user?.profile}
+                                        width={36}
+                                        height={36}
+                                        alt="Avatar"
+                                        className="overflow-hidden rounded-full"
+                                    />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <div className="px-2 py-1">
+                                    <h1 className="font-semibold">{user?.name}</h1>
+                                    <p className="text-xs">{user?.email}</p>
+                                </div>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>
+                                    <Link href='/profile'>Profile</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>Logout</DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu> : <Link href="/signin">
+                            <Button>Sign In</Button>
+                        </Link>
+                    }
+                </div>
             </div>
         </header>
     );
@@ -89,21 +171,3 @@ function MenuIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
     );
 }
 
-function MountainIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
-    return (
-        <svg
-            {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-            <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
-        </svg>
-    );
-}
