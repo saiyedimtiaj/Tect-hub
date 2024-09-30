@@ -7,12 +7,11 @@ import {
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import { Input } from '../ui/input';
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import axios from 'axios'; // For handling API requests
 import { useCreatePost } from '@/hooks/post.hooks';
 
 interface AddPostProps {
@@ -26,12 +25,11 @@ const AddPost = ({ isOpen, onOpenChange }: AddPostProps) => {
     const [imagePreview, setImagePreview] = useState<string[]>([]);
     const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
     const [isUploading, setIsUploading] = useState(false);
-    const { mutate: createPost, isPending } = useCreatePost()
+    const { mutate: createPost, isPending } = useCreatePost();
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || []);
         const newFiles = [...imageFiles, ...files];
-
         setImageFiles(newFiles);
 
         const previews = files.map(file => {
@@ -47,44 +45,31 @@ const AddPost = ({ isOpen, onOpenChange }: AddPostProps) => {
         });
     };
 
-    const uploadImageToCloudinary = async (imageFile: File) => {
-        const formData = new FormData();
-        formData.append('file', imageFile);
-        formData.append('upload_preset', "od7lpeqi");
-
-        try {
-            const response = await axios.post(`https://api.cloudinary.com/v1_1/ddhb3f9rg/image/upload`, formData, {
-                headers: { 'Content-Type': 'multipart/form-data' },
-            });
-            return response.data.secure_url; // URL of uploaded image
-        } catch (error) {
-            console.error('Error uploading image:', error);
-            return null;
-        }
-    };
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsUploading(true);
-        const rawContent = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
-        const uploadedImageUrls = await Promise.all(imageFiles.map(uploadImageToCloudinary));
 
-        if (uploadedImageUrls.some(url => url === null)) {
-            console.error('Some images failed to upload.');
-            setIsUploading(false);
-            return;
-        }
+        const rawContent = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+
+        const formData = new FormData();
         const postData = {
             category,
             content: rawContent,
-            images: uploadedImageUrls,
             type: "besic"
         };
+        formData.append("data", JSON.stringify(postData));
 
-        console.log(postData)
+        imageFiles.forEach(image => {
+            formData.append("image", image);
+        });
 
-        createPost(postData);
-        setIsUploading(false);
+        createPost(formData, {
+            onSuccess: () => {
+                onOpenChange(false)
+            },
+            onError: () => {
+                onOpenChange(false)
+            }
+        });
     };
 
     return (
@@ -158,7 +143,7 @@ const AddPost = ({ isOpen, onOpenChange }: AddPostProps) => {
                     <button
                         type="submit"
                         className="w-full py-2 px-4 bg-blue-600 text-white rounded-md"
-                        disabled={isUploading}
+                        disabled={isUploading || isPending}
                     >
                         {isUploading || isPending ? 'Uploading...' : 'Submit Post'}
                     </button>

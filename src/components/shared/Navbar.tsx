@@ -26,7 +26,13 @@ export default function Navbar() {
         setIsLoading(true);
     };
 
-    const navItems = ["Home", "About", "Services", "Contact"];
+    // Corrected navItems array with 'name' and 'href'
+    const navItems = [
+        { name: "Home", href: "/" },
+        { name: "About", href: "/about" },
+        { name: "News Feed", href: "/news-feed" },
+        { name: "Contact", href: "/contact" },
+    ];
 
     const UserDropdown = () => (
         <DropdownMenu>
@@ -74,8 +80,8 @@ export default function Navbar() {
             {/* Desktop Navigation */}
             <nav className="ml-auto hidden lg:flex gap-4 mr-5">
                 {navItems.map((item) => (
-                    <Link key={item} href={`/${item.toLowerCase()}`} className="flex items-center gap-3 font-medium text-lg" prefetch={false}>
-                        {item}
+                    <Link key={item.name} href={item.href} className="flex items-center gap-3 font-medium text-lg" prefetch={false}>
+                        {item.name}
                     </Link>
                 ))}
             </nav>
@@ -100,8 +106,8 @@ export default function Navbar() {
                     <SheetContent side="right">
                         <div className="grid gap-4 py-6">
                             {navItems.map((item) => (
-                                <Link key={item} href={`/${item.toLowerCase()}`} className="flex w-full items-center py-2 text-lg font-semibold" prefetch={false}>
-                                    {item}
+                                <Link key={item.name} href={item.href} className="flex w-full items-center py-2 text-lg font-semibold" prefetch={false}>
+                                    {item.name}
                                 </Link>
                             ))}
                         </div>

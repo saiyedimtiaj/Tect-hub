@@ -75,3 +75,11 @@ export const updateUser = async (userData: any) => {
     throw new Error(err);
   }
 };
+export const getUserProfile = async () => {
+  try {
+    const { data } = await axiosInstance.get(`/auth/user-profile`);
+    return data;
+  } catch (err: any) {
+    throw new Error(err);
+  }
+};

@@ -19,7 +19,7 @@ const PostCard = ({ post }: Props) => {
     const editorState = EditorState.createWithContent(contentState);
 
     return (
-        <div className='bg-white rounded shadow-sm px-4 py-2 border'>
+        <div className='bg-white rounded shadow-sm px-4 py-2 border my-4'>
             <div className='flex items-center gap-1'>
                 <Image
                     src={post?.userId?.profile as string}

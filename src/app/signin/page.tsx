@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link";
-
+import React from "react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,9 +8,13 @@ import { cn } from "@/lib/utils";
 import { Icons } from "@/components/Icons";
 import { useUserLogin } from "@/hooks/auth.hook";
 import { SyntheticEvent } from "react";
+import { useRouter } from "next/navigation";
+import { useUser } from "@/provider/user.provider";
 
 export default function SigninPage() {
-    const { mutate: loginUser } = useUserLogin()
+    const { mutate: loginUser } = useUserLogin();
+    const router = useRouter();
+    const { setIsLoading } = useUser()
 
     const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -18,7 +22,12 @@ export default function SigninPage() {
         const email = (form.elements.namedItem('email') as HTMLInputElement).value
         const password = (form.elements.namedItem('password') as HTMLInputElement).value
 
-        loginUser({ email, password })
+        loginUser({ email, password }, {
+            onSuccess: () => {
+                router.push('/')
+                setIsLoading(true)
+            }
+        })
     }
     return (
         <div className="container flex h-screen w-screen flex-col items-center justify-center">

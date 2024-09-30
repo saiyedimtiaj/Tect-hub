@@ -1,6 +1,11 @@
-import { createUser, logInUser, updateUser } from "@/services/auth.services";
+import {
+  createUser,
+  getUserProfile,
+  logInUser,
+  updateUser,
+} from "@/services/auth.services";
 import { TCreateUser, TLoginUser, TUser } from "@/types";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const useUserRegistation = () => {
@@ -39,5 +44,12 @@ export const useUpdateUser = () => {
       console.log(error);
       toast.error(error.message);
     },
+  });
+};
+
+export const useGetUser = () => {
+  return useQuery<any, Error, any, string[]>({
+    queryKey: ["USER_PROFILE"],
+    queryFn: async () => await getUserProfile(),
   });
 };
