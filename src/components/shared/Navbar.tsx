@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -8,41 +8,73 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 import { logoutUser } from "@/services/auth.services";
+import logo from "../../../public/assets/download.svg";
+import { Input } from "../ui/input";
+import { IoSearch } from "react-icons/io5";
+import { ImSwitch } from "react-icons/im";
 
 export default function Navbar() {
     const { user, setIsLoading } = useUser();
 
     const handleLogout = async () => {
-        await logoutUser()
-        setIsLoading(true)
-    }
+        await logoutUser();
+        setIsLoading(true);
+    };
+
+    const navItems = ["Home", "About", "Services", "Contact"];
+
+    const UserDropdown = () => (
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon" className="overflow-hidden rounded-full">
+                    <Image src={user?.profile!} width={36} height={36} alt="Avatar" className="overflow-hidden rounded-full" />
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+                <div className="flex gap-2">
+                    <Image src={user?.profile!} width={40} height={40} alt="Avatar" className="overflow-hidden rounded-md object-cover" />
+                    <div className="px-2 py-1">
+                        <h1 className="font-semibold">{user?.name}</h1>
+                        <p className="text-xs">{user?.email}</p>
+                    </div>
+                </div>
+                <DropdownMenuSeparator />
+                <button className="bg-[#0F6FEC] text-white font-medium w-[200px] text-sm py-2">
+                    <Link href="/profile">Profile</Link>
+                </button>
+                <DropdownMenuSeparator />
+                <button className="flex items-center justify-center gap-2 py-2 text-sm mt-2 mb-2 w-full border border-l-0 border-r-0" onClick={handleLogout}>
+                    <ImSwitch />
+                    Logout
+                </button>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    );
 
     return (
         <header className="flex justify-between container mx-auto h-20 w-full items-center px-4">
             {/* Logo / Brand */}
-            <Link
-                href="/"
-                className="mr-6 font-semibold text-xl md:text-2xl flex"
-                prefetch={false}
-            >
-                Tech Hub
-            </Link>
+            <div className="flex items-center gap-3">
+                <Link href="/" className="font-semibold text-xl md:text-2xl flex" prefetch={false}>
+                    <Image width={40} height={40} src={logo} alt="logo" />
+                </Link>
+                <form className="relative">
+                    <Input className="pl-8 pr-2 py-3 bg-[#ffffff]" placeholder="Search here.." />
+                    <button type="submit" className="absolute left-2.5 top-2 text-gray-600">
+                        <IoSearch size={20} />
+                    </button>
+                </form>
+            </div>
 
             {/* Desktop Navigation */}
-            <nav className="ml-auto hidden lg:flex gap-4">
-                {["Home", "About", "Services", "Contact"].map((item) => (
-                    <Link
-                        key={item}
-                        href={`/${item.toLowerCase()}`}
-                        className="group inline-flex h-9 items-center justify-center rounded-md bg-white px-4 py-2 text-base font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50"
-                        prefetch={false}
-                    >
+            <nav className="ml-auto hidden lg:flex gap-4 mr-5">
+                {navItems.map((item) => (
+                    <Link key={item} href={`/${item.toLowerCase()}`} className="flex items-center gap-3 font-medium text-lg" prefetch={false}>
                         {item}
                     </Link>
                 ))}
@@ -50,40 +82,11 @@ export default function Navbar() {
 
             {/* Sign In button - Desktop */}
             <div className="hidden lg:block">
-                {
-                    user ? <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button
-                                variant="outline"
-                                size="icon"
-                                className="overflow-hidden rounded-full"
-                            >
-                                <Image
-                                    src={user?.profile}
-                                    width={36}
-                                    height={36}
-                                    alt="Avatar"
-                                    className="overflow-hidden rounded-full"
-                                />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <div className="px-2 py-1">
-                                <h1 className="font-semibold">{user?.name}</h1>
-                                <p className="text-xs">{user?.email}</p>
-                            </div>
-
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>
-                                <Link href='/profile'>Profile</Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu> : <Link href="/signin">
+                {user ? <UserDropdown /> : (
+                    <Link href="/signin">
                         <Button>Sign In</Button>
                     </Link>
-                }
+                )}
             </div>
 
             {/* Mobile Navigation - Sheet */}
@@ -96,54 +99,20 @@ export default function Navbar() {
                     </SheetTrigger>
                     <SheetContent side="right">
                         <div className="grid gap-4 py-6">
-                            {["Home", "About", "Services", "Contact"].map((item) => (
-                                <Link
-                                    key={item}
-                                    href={`/${item.toLowerCase()}`}
-                                    className="flex w-full items-center py-2 text-lg font-semibold"
-                                    prefetch={false}
-                                >
+                            {navItems.map((item) => (
+                                <Link key={item} href={`/${item.toLowerCase()}`} className="flex w-full items-center py-2 text-lg font-semibold" prefetch={false}>
                                     {item}
                                 </Link>
                             ))}
-
                         </div>
                     </SheetContent>
                 </Sheet>
                 <div className="block lg:hidden">
-                    {
-                        user ? <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button
-                                    variant="outline"
-                                    size="icon"
-                                    className="overflow-hidden rounded-full"
-                                >
-                                    <Image
-                                        src={user?.profile}
-                                        width={36}
-                                        height={36}
-                                        alt="Avatar"
-                                        className="overflow-hidden rounded-full"
-                                    />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <div className="px-2 py-1">
-                                    <h1 className="font-semibold">{user?.name}</h1>
-                                    <p className="text-xs">{user?.email}</p>
-                                </div>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>
-                                    <Link href='/profile'>Profile</Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>Logout</DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu> : <Link href="/signin">
+                    {user ? <UserDropdown /> : (
+                        <Link href="/signin">
                             <Button>Sign In</Button>
                         </Link>
-                    }
+                    )}
                 </div>
             </div>
         </header>
@@ -170,4 +139,3 @@ function MenuIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
         </svg>
     );
 }
-

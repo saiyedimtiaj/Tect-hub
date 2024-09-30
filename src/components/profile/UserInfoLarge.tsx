@@ -14,7 +14,7 @@ const UserInfoLarge: React.FC = () => {
     const [isPostOpen, setIsPostOpen] = useState<boolean>(false);
 
     return (
-        <div className="-mt-16 flex flex-col items-center w-full">
+        <div className="-mt-16 flex flex-col items-center justify-center w-full">
             {/* Profile Image */}
             <Image
                 width={150}
@@ -24,15 +24,15 @@ const UserInfoLarge: React.FC = () => {
                 className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full border-4 border-white shadow-lg"
             />
 
-            <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center mt-4 w-full px-4">
+            <div className="flex flex-col justify-center items-center mt-4 w-full px-4">
                 {/* User Info */}
-                <div className="text-center sm:text-left">
+                <div className="text-center">
                     <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 pb-2">{user?.name || "User Name"}</h1>
-                    <p className='text-center md:text-left max-w-[400px] mb-5'>
+                    <p className='text-center max-w-[400px] mb-5'>
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est error qui nihil natus sequi? Culpa!
                     </p>
 
-                    <div className="flex justify-center sm:justify-start items-center gap-8 mt-2">
+                    <div className="flex justify-center items-center gap-8 mt-2">
                         <div className="flex flex-col items-center">
                             <p className="text-xl md:text-2xl font-semibold">10</p>
                             <p className="text-gray-600 text-sm md:text-base">Followers</p>

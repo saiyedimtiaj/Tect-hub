@@ -22,7 +22,6 @@ const Page = () => {
             </div>
             <div className="mt-16 mb-20">
                 <MyPost />
-                <h1 className="text-3xl font-bold text-center">No Post Create</h1>
             </div>
         </div>
     );

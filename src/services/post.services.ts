@@ -7,7 +7,6 @@ export const createPost = async (postData: IPost) => {
     const { data } = await axiosInstance.post("/post/create-post", postData);
     return data;
   } catch (err: any) {
-    console.log(err);
     throw new Error(err);
   }
 };
@@ -16,7 +15,6 @@ export const getMyPosts = async () => {
     const { data } = await axiosInstance.get("/post/my-posts");
     return data;
   } catch (err: any) {
-    console.log(err);
     throw new Error(err);
   }
 };
