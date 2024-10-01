@@ -1,17 +1,21 @@
-"use client"
-import React from 'react'
-import { Avatar } from '../ui/avatar'
-import { Button } from '../ui/button'
-import Image from 'next/image'
-import { useGetUser } from '@/hooks/auth.hook'
-import banner from "../../../public/assets/cover.jpg"
-import Link from 'next/link'
+"use client";
+import React from 'react';
+import { Button } from '../ui/button';
+import Image from 'next/image';
+import { useGetUser } from '@/hooks/auth.hook';
+import banner from "../../../public/assets/cover.jpg";
+import Link from 'next/link';
+import LeftSideProfileSkeleton from '../Scaleton/LeftSideProfileSkeleton';
 
 const LeftSideProfile = () => {
-    const { data } = useGetUser();
-    console.log(data)
+    const { data, isLoading } = useGetUser();
+
+    if (isLoading) {
+        return <LeftSideProfileSkeleton />;
+    }
+
     return (
-        <div className="hidden md:block w-1/4 p-6 bg-white">
+        <div className="hidden lg:block w-1/4 p-6 bg-white">
             <div className="relative mb-4">
                 <Image
                     src={banner}
@@ -53,7 +57,7 @@ const LeftSideProfile = () => {
                 <Link href='/profile'>View Profile</Link>
             </Button>
         </div>
-    )
-}
+    );
+};
 
-export default LeftSideProfile
+export default LeftSideProfile;

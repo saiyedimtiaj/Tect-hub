@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link"
-
+import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/Icons"
@@ -8,9 +8,9 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { SyntheticEvent } from "react"
 import { useUserRegistation } from "@/hooks/auth.hook"
+import cover from "../../../public/assets/Chemistry Infographic5-01.jpg"
 
 export default function RegisterPage() {
-
     const { mutate: createUser } = useUserRegistation()
 
     const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
@@ -22,20 +22,24 @@ export default function RegisterPage() {
 
         createUser({ name, email, password })
     }
+
     return (
-        <div className="container grid h-screen w-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
-            <Link
-                href="/signin"
-                className={cn(
-                    buttonVariants({ variant: "ghost" }),
-                    "absolute right-4 top-4 md:right-8 md:top-8"
-                )}
-            >
-                Login
-            </Link>
-            <div className="hidden h-full bg-muted lg:block" />
-            <div className="lg:p-8">
-                <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+        <div className="flex min-h-screen flex-col lg:flex-row">
+            {/* Left section with Image */}
+            <div className="relative hidden min-h-screen lg:block lg:w-1/2">
+                <Image
+                    src={cover}
+                    alt="banner"
+                    fill
+                    className="object-cover min-h-screen"
+                    priority
+                />
+            </div>
+
+            {/* Right section with form */}
+            <div className="flex w-full items-center justify-center p-6 sm:p-8 lg:w-1/2">
+                <div className="mx-auto w-full max-w-md space-y-6">
+                    {/* Header */}
                     <div className="flex flex-col space-y-2 text-center">
                         <Icons.logo className="mx-auto h-6 w-6" />
                         <h1 className="text-2xl font-semibold tracking-tight">
@@ -46,12 +50,13 @@ export default function RegisterPage() {
                         </p>
                     </div>
 
+                    {/* Form */}
                     <form onSubmit={handleSubmit} className="grid gap-4">
                         <div className="grid gap-2">
                             <Label htmlFor="name">User Name</Label>
                             <Input
                                 id="name"
-                                type="name"
+                                type="text"
                                 placeholder="John Doe"
                                 required
                             />
@@ -61,13 +66,18 @@ export default function RegisterPage() {
                             <Input
                                 id="email"
                                 type="email"
-                                placeholder="jon@example.com"
+                                placeholder="john@example.com"
                                 required
                             />
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="password">Password</Label>
-                            <Input id="password" type="password" placeholder="*******" required />
+                            <Input
+                                id="password"
+                                type="password"
+                                placeholder="*******"
+                                required
+                            />
                         </div>
                         <Button type="submit" className="w-full">
                             Create an account
@@ -76,25 +86,32 @@ export default function RegisterPage() {
                             Sign up with Google
                         </Button>
                     </form>
-                    <p className="px-8 text-center text-sm text-muted-foreground">
+
+                    {/* Terms and conditions */}
+                    <p className="text-center text-sm text-muted-foreground">
                         By clicking continue, you agree to our{" "}
-                        <Link
-                            href="/terms"
-                            className="hover:text-brand underline underline-offset-4"
-                        >
+                        <Link href="/terms" className="hover:text-brand underline underline-offset-4">
                             Terms of Service
                         </Link>{" "}
                         and{" "}
-                        <Link
-                            href="/privacy"
-                            className="hover:text-brand underline underline-offset-4"
-                        >
+                        <Link href="/privacy" className="hover:text-brand underline underline-offset-4">
                             Privacy Policy
                         </Link>
                         .
                     </p>
                 </div>
             </div>
+
+            {/* Floating Login button */}
+            <Link
+                href="/signin"
+                className={cn(
+                    buttonVariants({ variant: "ghost" }),
+                    "absolute top-4 right-4 md:top-8 md:right-8"
+                )}
+            >
+                Login
+            </Link>
         </div>
     )
 }

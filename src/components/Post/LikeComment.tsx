@@ -12,11 +12,12 @@ import { envConfig } from '@/config/envConfig';
 import { TComment, TUserVote } from '@/types';
 import { useAddOrRemoveVote } from '@/hooks/vote.hook';
 import { motion } from 'framer-motion';
+import LikeCommentSkeleton from '../Scaleton/LikeCommentSkeleton';
 
 const LikeComment = ({ postId }: { postId: string }) => {
     const { user } = useUser();
 
-    const { data: commentData, refetch: commentRefetch } = useQuery<any, Error, any, string[]>({
+    const { data: commentData, refetch: commentRefetch, isLoading } = useQuery<any, Error, any, string[]>({
         queryKey: ["COMMENT", postId],
         queryFn: async () => await axios.get(`${envConfig.baseApi}/comment/get-coment/${postId}`),
     });
@@ -41,6 +42,10 @@ const LikeComment = ({ postId }: { postId: string }) => {
     };
 
     const isVoted = voteData?.data?.data?.votes.some((vote: TUserVote) => vote.userId === user?._id);
+
+    if (isLoading) {
+        return <LikeCommentSkeleton />
+    }
 
     return (
         <div>
