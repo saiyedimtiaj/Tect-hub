@@ -83,3 +83,11 @@ export const getUserProfile = async () => {
     throw new Error(err);
   }
 };
+export const getUserInfo = async (id: string) => {
+  try {
+    const { data } = await axiosInstance.get(`/auth/user-info/${id}`);
+    return data;
+  } catch (err: any) {
+    throw new Error(err);
+  }
+};

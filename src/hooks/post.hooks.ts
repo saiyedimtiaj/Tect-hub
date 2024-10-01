@@ -3,6 +3,7 @@ import {
   getAllPosts,
   getMyPosts,
   getSinglePosts,
+  getUserPosts,
 } from "@/services/post.services";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -24,6 +25,12 @@ export const useGetMyPosts = () => {
   return useQuery<any, Error, any, string[]>({
     queryKey: ["POST"],
     queryFn: async () => await getMyPosts(),
+  });
+};
+export const useGetUserAllPosts = (id: string) => {
+  return useQuery<any, Error, any, string[]>({
+    queryKey: ["USER_POST"],
+    queryFn: async () => await getUserPosts(id),
   });
 };
 export const useAllPosts = (limit: number) => {

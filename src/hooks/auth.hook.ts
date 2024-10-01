@@ -1,5 +1,6 @@
 import {
   createUser,
+  getUserInfo,
   getUserProfile,
   logInUser,
   updateUser,
@@ -51,5 +52,11 @@ export const useGetUser = () => {
   return useQuery<any, Error, any, string[]>({
     queryKey: ["USER_PROFILE"],
     queryFn: async () => await getUserProfile(),
+  });
+};
+export const useGetInfo = (id: string) => {
+  return useQuery<any, Error, any, string[]>({
+    queryKey: ["USER_PROFILE"],
+    queryFn: async () => await getUserInfo(id),
   });
 };

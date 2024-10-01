@@ -6,7 +6,6 @@ import PostCard from '../Post/PostCard';
 
 const MyPost = () => {
     const { data } = useGetMyPosts();
-    console.log(data)
     return (
         <div className='max-w-[1000px] mx-auto'>
             {

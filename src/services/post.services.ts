@@ -18,6 +18,14 @@ export const getMyPosts = async () => {
     throw new Error(err);
   }
 };
+export const getUserPosts = async (id: string) => {
+  try {
+    const { data } = await axiosInstance.get(`/post/user-posts/${id}`);
+    return data;
+  } catch (err: any) {
+    throw new Error(err);
+  }
+};
 export const getAllPosts = async (limit: number) => {
   try {
     const { data } = await axiosInstance.get(`/post/all-posts?limit=${limit}`);

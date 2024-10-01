@@ -28,7 +28,7 @@ const PostCard = ({ post }: Props) => {
         <div className='bg-white rounded shadow-sm px-4 py-2 border my-4' ref={targetRef}>
             <div>
                 <div className='flex items-center justify-between gap-2'>
-                    <div className='flex items-center gap-1'>
+                    <Link href={`/profile/${post?.userId?._id}`} className='flex items-center gap-1'>
                         <Image
                             src={post?.userId?.profile as string}
                             width={60}
@@ -40,7 +40,7 @@ const PostCard = ({ post }: Props) => {
                             <h5 className="text-lg font-semibold">{post?.userId?.name}</h5>
                             <p>{moment(post?.createdAt).format('MMMM Do YYYY')}</p>
                         </div>
-                    </div>
+                    </Link>
                     <div>
                         {
                             pathName === "/news-feed" && <button onClick={() => toPDF()}><TfiDownload /></button>
