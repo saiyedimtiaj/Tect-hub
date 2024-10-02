@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { getCurrentUser } from "./services/auth.services";
 
 // Define protected routes
-const protectedRoutes = ["/profile", "/news-feed"];
+const protectedRoutes = ["/profile", "/news-feed", "/payment"];
 const adminOnlyRoutes = ["/dashboard"];
 
 type role = keyof typeof roleBasedRoutes;
@@ -63,6 +63,8 @@ export const config = {
     "/profile",
     "/profile/:page*",
     "/dashboard",
+    "/dashboard/:page*",
+    "/payment",
     "/news-feed",
     "/signin",
     "/register",

@@ -13,6 +13,8 @@ import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useCreatePost } from '@/hooks/post.hooks';
+import { useGetUser } from '@/hooks/auth.hook';
+import { useRouter } from 'next/navigation';
 
 interface AddPostProps {
     isOpen: boolean;
@@ -24,8 +26,10 @@ const AddPost = ({ isOpen, onOpenChange }: AddPostProps) => {
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [imagePreview, setImagePreview] = useState<string[]>([]);
     const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
-    const [isUploading, setIsUploading] = useState(false);
     const { mutate: createPost, isPending } = useCreatePost();
+    const [postType, setPostType] = useState("besic");
+    const { data, isLoading, isFetching } = useGetUser();
+    const router = useRouter()
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || []);
@@ -71,6 +75,22 @@ const AddPost = ({ isOpen, onOpenChange }: AddPostProps) => {
             }
         });
     };
+
+    if (isLoading) {
+        return <>Loading...</>
+    }
+
+    const user = data?.data
+
+    const isTimeOut = user?.membershipEnd < new Date().toISOString();
+    const handlePrimum = () => {
+        if (user?.membershipEnd && !isTimeOut) {
+            setPostType("primum")
+        } else {
+            router.push("/payment")
+        }
+
+    }
 
     return (
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -123,6 +143,19 @@ const AddPost = ({ isOpen, onOpenChange }: AddPostProps) => {
                         </div>
                     )}
 
+                    <div className='mt-2 mb-2'>
+                        <Label>Post Type</Label>
+                        <div className='flex items-center gap-2'>
+                            <div onClick={() => setPostType("besic")} className={`text-center text-sm font-semibold w-full py-2.5 cursor-pointer rounded-md ${postType === "besic" ? "border-2 border-black" : "border"}`}>
+                                Besic
+                            </div>
+                            <div onClick={handlePrimum} className={`text-center cursor-pointer  w-full flex justify-center items-end gap-1 py-2 rounded-md ${postType === "prymium" ? "border-2 border-black" : "border"}`}>
+                                <span className='text-sm font-semibold'>primum</span>
+                                <span className='text-xs'>/20$ per month</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div>
                         <Label htmlFor="editor">Content</Label>
                         <div className="border border-gray-300 rounded-md min-h-[200px] max-h-[300px] overflow-y-auto">
@@ -143,9 +176,9 @@ const AddPost = ({ isOpen, onOpenChange }: AddPostProps) => {
                     <button
                         type="submit"
                         className="w-full py-2 px-4 bg-blue-600 text-white rounded-md"
-                        disabled={isUploading || isPending}
+                        disabled={isPending}
                     >
-                        {isUploading || isPending ? 'Uploading...' : 'Submit Post'}
+                        {isPending ? 'Uploading...' : 'Submit Post'}
                     </button>
                 </form>
             </DialogContent>

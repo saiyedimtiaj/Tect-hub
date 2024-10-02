@@ -10,6 +10,7 @@ import { usePathname } from 'next/navigation';
 import { TfiDownload } from "react-icons/tfi";
 import { usePDF } from 'react-to-pdf';
 import Link from 'next/link';
+import badge from "../../../public/assets/stamp.png"
 
 type Props = {
     post: IPost;
@@ -24,6 +25,11 @@ const PostCard = ({ post }: Props) => {
     const contentState = convertFromRaw(JSON.parse(post?.content));
     const editorState = EditorState.createWithContent(contentState);
 
+
+    const currentDate = new Date();
+    const membershipEndDate = new Date(post?.userId?.membershipEnd!);
+    const isTimeOut = membershipEndDate < currentDate;
+
     return (
         <div className='bg-white rounded shadow-sm px-4 py-2 border my-4' ref={targetRef}>
             <div>
@@ -37,7 +43,17 @@ const PostCard = ({ post }: Props) => {
                             className='w-[60px] h-[60px] object-cover rounded-full'
                         />
                         <div>
-                            <h5 className="text-lg font-semibold">{post?.userId?.name}</h5>
+                            <h5 className="text-lg font-semibold flex items-center gap-2">{post?.userId?.name}
+                                {
+                                    post?.userId?.membershipEnd && !isTimeOut && <Image
+                                        width={60}
+                                        height={60}
+                                        alt="banner"
+                                        src={badge}
+                                        className="w-[18px] md:w-[25px] h-[18px] md:h-[25px] object-cover "
+                                    />
+                                }
+                            </h5>
                             <p>{moment(post?.createdAt).format('MMMM Do YYYY')}</p>
                         </div>
                     </Link>
@@ -50,6 +66,11 @@ const PostCard = ({ post }: Props) => {
                 <div className="text-area mt-1">
                     {/* Displaying the content from the draft.js editor */}
                     <div dangerouslySetInnerHTML={{ __html: draftToHtml(convertToRaw(editorState.getCurrentContent())) }} />
+                </div>
+                <div className='my-1 flex'>
+                    {
+                        post?.type === "besic" ? <p className='font-medium text-white bg-red-600 px-4 py-0.5 rounded-full'>Besic</p> : <p className='font-medium text-white bg-blue-500 px-4 py-0.5 rounded-full'>Primum</p>
+                    }
                 </div>
                 <div className='grid grid-cols-2 gap-2 mt-2'>
                     {images.length > 5 ? (

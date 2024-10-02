@@ -1,6 +1,5 @@
 "use server";
 import axiosInstance from "@/lib/axiosInstance";
-import { IPost } from "@/types";
 
 export const createPost = async (postData: any) => {
   try {

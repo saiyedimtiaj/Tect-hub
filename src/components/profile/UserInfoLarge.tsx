@@ -8,6 +8,8 @@ import EditProfile from '../Modal/EditProfile';
 import AddPost from '../Modal/AddPost';
 import { useGetUser } from '@/hooks/auth.hook';
 import Loading from '../shared/Loading';
+import { VerifiedIcon } from 'lucide-react';
+import badge from "../../../public/assets/stamp.png"
 
 const UserInfoLarge: React.FC = () => {
     const [isEditProfileOpen, setEditProfileOpen] = useState<boolean>(false);
@@ -15,6 +17,9 @@ const UserInfoLarge: React.FC = () => {
     const { data, isLoading, isFetching } = useGetUser()
 
     const user = data?.data
+
+    const isTimeOut = user?.membershipEnd < new Date().toISOString();
+
 
     return (
         isLoading || isFetching ? <Loading /> : <>
@@ -39,7 +44,17 @@ const UserInfoLarge: React.FC = () => {
                     <div className="flex flex-col justify-center items-center mt-4 w-full px-4">
                         {/* User Info */}
                         <div className="text-center">
-                            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 pb-2">{user?.name || "User Name"}</h1>
+                            <h1 className="text-2xl flex items-center gap-2 sm:text-3xl md:text-4xl font-bold text-gray-900 pb-2">{user?.name || "User Name"}
+                                {
+                                    user?.membershipEnd && !isTimeOut && <Image
+                                        width={60}
+                                        height={60}
+                                        alt="banner"
+                                        src={badge}
+                                        className="w-[30px] md:w-[40px] h-[30px] md:h-[40px] object-cover "
+                                    />
+                                }
+                            </h1>
                             <p className='text-center max-w-[400px] mb-5'>
                                 {user?.bio}
                             </p>

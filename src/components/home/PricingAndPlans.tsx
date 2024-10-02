@@ -1,5 +1,7 @@
 "use client"
+import { useUser } from "@/provider/user.provider";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 const plans = [
     {
@@ -16,6 +18,17 @@ const plans = [
 ];
 
 export default function PricingAndPlans() {
+    const { user } = useUser();
+    const router = useRouter()
+
+    const handleNavigation = () => {
+        if (user?.email) {
+            router.push('/payment')
+        } else {
+            router.push('/signin')
+        }
+    }
+
     return (
         <section className="container mx-auto py-16 px-6">
             <div className="text-center mb-12">
@@ -58,6 +71,7 @@ export default function PricingAndPlans() {
                             ))}
                         </ul>
                         <motion.button
+                            onClick={handleNavigation}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"

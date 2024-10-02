@@ -6,16 +6,11 @@ import {
     Bell,
     CircleUser,
     Home,
-    LineChart,
     Menu,
-    Package,
     Package2,
-    Search,
-    ShoppingCart,
     Users,
 } from "lucide-react"
 
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
@@ -25,16 +20,13 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 // Create an array of navigation links
 const navLinks = [
     { label: "Dashboard", href: "/dashboard", icon: Home },
-    { label: "Orders", href: "/dashboard/orders", icon: ShoppingCart, badge: 6 },
-    { label: "Products", href: "/dashboard/products", icon: Package },
-    { label: "Customers", href: "/dashboard/customers", icon: Users },
-    { label: "Analytics", href: "/dashboard/analytics", icon: LineChart },
+    { label: "Users", href: "/dashboard/users", icon: Users },
+    { label: "Payment", href: "/dashboard/history", icon: History },
 ]
 
 const Layout = ({ children }: { children: ReactNode }) => {
@@ -57,7 +49,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
                     <div className="flex-1">
                         <nav className="grid items-start px-2 text-sm font-medium lg:px-4 mt-2">
                             {navLinks.map((link) => {
-                                const Icon = link.icon
+                                const Icon: any = link.icon
                                 const isActive = pathname === link.href
 
                                 return (
@@ -71,11 +63,6 @@ const Layout = ({ children }: { children: ReactNode }) => {
                                     >
                                         <Icon className="h-4 w-4" />
                                         {link.label}
-                                        {link.badge && (
-                                            <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                                                {link.badge}
-                                            </Badge>
-                                        )}
                                     </Link>
                                 )
                             })}
@@ -106,7 +93,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
                                     <span className="sr-only">Acme Inc</span>
                                 </Link>
                                 {navLinks.map((link) => {
-                                    const Icon = link.icon
+                                    const Icon: any = link.icon
                                     const isActive = pathname === link.href
 
                                     return (
