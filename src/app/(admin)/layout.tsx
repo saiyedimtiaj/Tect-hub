@@ -5,12 +5,18 @@ import { usePathname } from "next/navigation" // Import usePathname from Next.js
 import {
     Bell,
     CircleUser,
+    History,
     Home,
+    LineChart,
     Menu,
+    Package,
     Package2,
+    Search,
+    ShoppingCart,
     Users,
 } from "lucide-react"
 
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
@@ -20,6 +26,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 // Create an array of navigation links
@@ -49,7 +56,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
                     <div className="flex-1">
                         <nav className="grid items-start px-2 text-sm font-medium lg:px-4 mt-2">
                             {navLinks.map((link) => {
-                                const Icon: any = link.icon
+                                const Icon = link.icon
                                 const isActive = pathname === link.href
 
                                 return (
@@ -93,7 +100,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
                                     <span className="sr-only">Acme Inc</span>
                                 </Link>
                                 {navLinks.map((link) => {
-                                    const Icon: any = link.icon
+                                    const Icon = link.icon
                                     const isActive = pathname === link.href
 
                                     return (

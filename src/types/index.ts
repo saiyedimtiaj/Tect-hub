@@ -52,3 +52,12 @@ export interface TVote {
   votes: TUserVote[];
   __v: number;
 }
+
+export interface TPayment {
+  paymentId: string;
+  amount: number;
+  status: string;
+  userId: TUser;
+  createdAt: string;
+  updatedAt: string;
+}

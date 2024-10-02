@@ -1,5 +1,5 @@
-import { createNewOrder } from "@/services/payment.services";
-import { useMutation } from "@tanstack/react-query";
+import { createNewOrder, getAllPayment } from "@/services/payment.services";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const useCreateNewOrder = () => {
@@ -12,5 +12,12 @@ export const useCreateNewOrder = () => {
     onError: (error) => {
       toast.error(error.message);
     },
+  });
+};
+
+export const useGetAllPayment = () => {
+  return useQuery<any, Error, any, string[]>({
+    queryKey: ["ALL_PAYMENT"],
+    queryFn: async () => await getAllPayment(),
   });
 };
