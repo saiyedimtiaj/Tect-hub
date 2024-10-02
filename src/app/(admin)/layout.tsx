@@ -28,12 +28,14 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { HiDocument } from 'react-icons/hi'
 
 // Create an array of navigation links
 const navLinks = [
     { label: "Dashboard", href: "/dashboard", icon: Home },
     { label: "Users", href: "/dashboard/users", icon: Users },
     { label: "Payment", href: "/dashboard/history", icon: History },
+    { label: "Posts", href: "/dashboard/post", icon: HiDocument },
 ]
 
 const Layout = ({ children }: { children: ReactNode }) => {
@@ -46,7 +48,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
                     <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
                         <Link href="/" className="flex items-center gap-2 font-semibold">
                             <Package2 className="h-6 w-6" />
-                            <span>Acme Inc</span>
+                            <span>Tech Hub</span>
                         </Link>
                         <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
                             <Bell className="h-4 w-4" />
@@ -97,7 +99,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
                                     className="flex items-center gap-2 text-lg font-semibold"
                                 >
                                     <Package2 className="h-6 w-6" />
-                                    <span className="sr-only">Acme Inc</span>
+                                    <span className="sr-only">Tech Hub</span>
                                 </Link>
                                 {navLinks.map((link) => {
                                     const Icon = link.icon

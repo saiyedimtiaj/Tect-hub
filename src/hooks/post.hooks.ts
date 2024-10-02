@@ -1,5 +1,6 @@
 import {
   createPost,
+  deletePost,
   getAllPosts,
   getMyPosts,
   getSinglePosts,
@@ -33,7 +34,7 @@ export const useGetUserAllPosts = (id: string) => {
     queryFn: async () => await getUserPosts(id),
   });
 };
-export const useAllPosts = (limit: number) => {
+export const useAllPosts = (limit?: number) => {
   return useQuery<any, Error, any, string[]>({
     queryKey: ["All_POST"],
     queryFn: async () => await getAllPosts(limit),
@@ -43,5 +44,18 @@ export const useGetSinglePosts = (id: string) => {
   return useQuery<any, Error, any, string[]>({
     queryKey: ["SINGLE_POSTYYY"],
     queryFn: async () => await getSinglePosts(id),
+  });
+};
+
+export const useDeletePost = () => {
+  return useMutation({
+    mutationKey: ["POST_DEL"],
+    mutationFn: async (id: string) => await deletePost(id),
+    onSuccess: (data) => {
+      toast.success(data?.message);
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
   });
 };

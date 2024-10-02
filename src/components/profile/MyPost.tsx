@@ -5,13 +5,13 @@ import React from 'react'
 import PostCard from '../Post/PostCard';
 
 const MyPost = () => {
-    const { data } = useGetMyPosts();
+    const { data, refetch } = useGetMyPosts();
     return (
         <div className='max-w-[1000px] mx-auto'>
             {
                 data?.data?.length > 0 ? <div>
                     {
-                        data?.data?.map((post: IPost) => <PostCard key={post?._id} post={post} />)
+                        data?.data?.map((post: IPost) => <PostCard key={post?._id} post={post} refetch={refetch} />)
                     }
                 </div> : <h1 className="text-3xl font-bold text-center">No Post Found</h1>
             }

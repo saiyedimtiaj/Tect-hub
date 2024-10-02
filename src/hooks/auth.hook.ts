@@ -56,7 +56,7 @@ export const useGetUser = () => {
 };
 export const useGetInfo = (id: string) => {
   return useQuery<any, Error, any, string[]>({
-    queryKey: ["USER_PROFILE"],
+    queryKey: ["USER_PROFILE_INFO"],
     queryFn: async () => await getUserInfo(id),
   });
 };

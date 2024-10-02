@@ -11,6 +11,7 @@ import Slider from "./Slider"
 import { useEffect, useRef, useState } from "react";
 import PostCardSkeleton from "../Scaleton/PostCardSkeleton"
 import AddPost from "../Modal/AddPost"
+import SearchBar from "./SearchBar"
 
 const AllPosts = () => {
     const [open, setIsOpen] = useState(false)
@@ -69,7 +70,8 @@ const AllPosts = () => {
 
     return (
         <div>
-            <div onClick={() => setIsOpen(true)} className="w-full bg-white p-3 rounded-md shadow-sm">
+            <SearchBar />
+            <div onClick={() => setIsOpen(true)} className="w-full cursor-pointer bg-white p-3 rounded-md shadow-sm">
                 <div className="flex items-center gap-2.5 w-full border border-t-0 border-l-0 border-r-0 pb-3">
                     <Image width={40} height={40} alt="profile" src={user?.profile ? user?.profile : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} className="rounded-full object-cover" />
                     <div className="bg-gray-200 rounded-lg px-3 py-2 w-full">

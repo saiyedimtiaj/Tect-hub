@@ -1,6 +1,6 @@
 import { IPost } from '@/types';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import { EditorState, convertFromRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
@@ -11,15 +11,22 @@ import { TfiDownload } from "react-icons/tfi";
 import { usePDF } from 'react-to-pdf';
 import Link from 'next/link';
 import badge from "../../../public/assets/stamp.png"
+import { Button } from '../ui/button';
+import { Trash } from 'lucide-react';
+import DeletePostModal from '../Modal/DeletePostModal';
+import { useDeletePost } from '@/hooks/post.hooks';
 
 type Props = {
     post: IPost;
+    refetch?: any
 };
 
-const PostCard = ({ post }: Props) => {
+const PostCard = ({ post, refetch }: Props) => {
     const pathName = usePathname();
     const images = post?.images || [];
     const { toPDF, targetRef } = usePDF({ filename: 'page.pdf' });
+    const [isOpen, setIsOpen] = useState(false);
+    const { mutate: deletePost } = useDeletePost()
 
     // Convert the stored state to the Draft.js editor state
     const contentState = convertFromRaw(JSON.parse(post?.content));
@@ -29,6 +36,14 @@ const PostCard = ({ post }: Props) => {
     const currentDate = new Date();
     const membershipEndDate = new Date(post?.userId?.membershipEnd!);
     const isTimeOut = membershipEndDate < currentDate;
+
+    const handleDelete = () => {
+        deletePost(post?._id as string, {
+            onSuccess: () => {
+                refetch()
+            }
+        })
+    }
 
     return (
         <div className='bg-white rounded shadow-sm px-4 py-2 border my-4' ref={targetRef}>
@@ -57,9 +72,10 @@ const PostCard = ({ post }: Props) => {
                             <p>{moment(post?.createdAt).format('MMMM Do YYYY')}</p>
                         </div>
                     </Link>
-                    <div>
+                    <div className='flex items-center gap-2'>
+                        <button onClick={() => toPDF()}><TfiDownload /></button>
                         {
-                            pathName === "/news-feed" && <button onClick={() => toPDF()}><TfiDownload /></button>
+                            pathName === '/profile' && <Trash size={15} onClick={() => setIsOpen(true)} className='cursor-pointer' />
                         }
                     </div>
                 </div>
@@ -115,6 +131,7 @@ const PostCard = ({ post }: Props) => {
                 </div>
             </div>
             <LikeComment postId={post?._id!} />
+            <DeletePostModal isOpen={isOpen} onClose={() => setIsOpen(false)} onConfirm={handleDelete} />
         </div>
     );
 };

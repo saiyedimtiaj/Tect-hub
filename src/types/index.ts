@@ -62,3 +62,28 @@ export interface TPayment {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface PostDetails {
+  _id: string;
+  content: string;
+  userId: string;
+  images: string[];
+  category: string;
+  createdAt: string;
+}
+
+export interface UserDetails {
+  _id: string;
+  name: string;
+  email: string;
+  profile: string;
+  role: string;
+  bio: string;
+}
+
+export interface TMostLikePost {
+  _id: string;
+  totalLikes: number;
+  postDetails: PostDetails;
+  userDetails: UserDetails;
+}

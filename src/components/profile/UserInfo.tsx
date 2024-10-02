@@ -9,6 +9,7 @@ import UserPost from './UserPost';
 import { useCreateFollowRequest } from '@/hooks/user.hooks';
 import { useUser } from '@/provider/user.provider';
 import { SlUserFollowing } from "react-icons/sl";
+import badge from "../../../public/assets/stamp.png"
 
 const UserInfo = () => {
     const { user: meAsUser } = useUser()
@@ -26,6 +27,10 @@ const UserInfo = () => {
     }
 
     const isFollow = user?.followers?.find((u: { userId: string }) => u.userId === meAsUser?._id)
+
+    const currentDate = new Date();
+    const membershipEndDate = new Date(user?.membershipEnd!);
+    const isTimeOut = membershipEndDate < currentDate;
 
     return (
         isLoading || isFetching ? <Loading /> : <div className='relative'>
@@ -49,7 +54,18 @@ const UserInfo = () => {
                 <div className="flex flex-col justify-center items-center mt-4 w-full px-4">
                     {/* User Info */}
                     <div className="text-center">
-                        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 pb-2">{user?.name || "User Name"}</h1>
+                        <div className='flex items-center gap-1'>
+                            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 pb-2">{user?.name || "User Name"}</h1>
+                            {
+                                user?.membershipEnd && !isTimeOut && <Image
+                                    width={60}
+                                    height={60}
+                                    alt="banner"
+                                    src={badge}
+                                    className="w-[30px] md:w-[40px] h-[30px] md:h-[40px] object-cover "
+                                />
+                            }
+                        </div>
                         <p className='text-center max-w-[400px] mb-5'>
                             {user?.bio}
                         </p>

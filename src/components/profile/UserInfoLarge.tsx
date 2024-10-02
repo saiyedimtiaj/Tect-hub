@@ -8,21 +8,22 @@ import EditProfile from '../Modal/EditProfile';
 import AddPost from '../Modal/AddPost';
 import { useGetUser } from '@/hooks/auth.hook';
 import Loading from '../shared/Loading';
-import { VerifiedIcon } from 'lucide-react';
 import badge from "../../../public/assets/stamp.png"
 
 const UserInfoLarge: React.FC = () => {
     const [isEditProfileOpen, setEditProfileOpen] = useState<boolean>(false);
     const [isPostOpen, setIsPostOpen] = useState<boolean>(false);
-    const { data, isLoading, isFetching } = useGetUser()
+    const { data, isLoading } = useGetUser()
 
     const user = data?.data
 
-    const isTimeOut = user?.membershipEnd < new Date().toISOString();
+    const currentDate = new Date();
+    const membershipEndDate = new Date(user?.membershipEnd!);
+    const isTimeOut = membershipEndDate < currentDate;
 
 
     return (
-        isLoading || isFetching ? <Loading /> : <>
+        isLoading ? <Loading /> : <>
             <div className='relative'>
                 <Image
                     width={800}
