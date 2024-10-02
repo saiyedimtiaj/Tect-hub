@@ -18,6 +18,7 @@ export type TUser = {
   exp: number;
   bio: string;
   membershipEnd: Date;
+  status: string;
 };
 
 export interface IPost {

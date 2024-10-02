@@ -1,6 +1,4 @@
 "use client"
-import { useGetAllPayment } from "@/hooks/payment.hook"
-
 import { useState } from "react"
 import {
     ColumnDef,
@@ -14,7 +12,7 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown } from "lucide-react"
+import { ChevronDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -34,13 +32,17 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import Image from "next/image"
-import { TPayment } from "@/types"
+import { TUser } from "@/types"
 import { Badge } from "@/components/ui/badge"
 import SkeletonRow from "../Scaleton/SkeletonRow"
+import { useGetAllUser, useUpdateUserRole } from "@/hooks/user.hooks"
+import { CaretSortIcon } from "@radix-ui/react-icons"
+import UserStatusDialog from "../Modal/UserStatusDialog"
 
 
-const PaymentHistoryTable = () => {
-    const { data, isLoading, error } = useGetAllPayment()
+const UserTable = () => {
+    const { mutate: updateStatus } = useUpdateUserRole()
+    const { data, isLoading, error, refetch } = useGetAllUser()
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
         []
@@ -48,11 +50,29 @@ const PaymentHistoryTable = () => {
     const [columnVisibility, setColumnVisibility] =
         useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = useState({})
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
+
+    const handleStatusClick = (user: TUser) => {
+        setSelectedUser(user);
+        setDialogOpen(true);
+    };
+
+    const handleStatusConfirm = () => {
+        const payloed = {
+            id: selectedUser?._id!,
+            status: selectedUser?.status === "active" ? "block" : "active"
+        }
+        updateStatus(payloed, {
+            onSuccess: () => {
+                refetch()
+            }
+        })
+    };
 
 
 
-    const columns: ColumnDef<TPayment>[] = [
+    const columns: ColumnDef<TUser>[] = [
         {
             id: "select",
             header: ({ table }) => (
@@ -80,7 +100,7 @@ const PaymentHistoryTable = () => {
             header: () => <div className="text-left">Image</div>,
             cell: ({ row }) => {
                 return <div>
-                    <Image width={48} height={48} className="h-12 w-12 rounded-full object-cover" src={row.original.userId?.profile} alt="image" />
+                    <Image width={48} height={48} className="h-12 w-12 rounded-full object-cover" src={row.original?.profile} alt="image" />
                 </div>
             },
         },
@@ -88,32 +108,46 @@ const PaymentHistoryTable = () => {
             accessorKey: "name",
             header: "name",
             cell: ({ row }) => (
-                <div className="capitalize">{row.original?.userId?.name}</div>
+                <div className="capitalize">{row.original?.name}</div>
             ),
         },
         {
-            accessorKey: "price",
+            accessorKey: "email",
             header: ({ column }) => {
                 return (
-                    "Price"
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Email
+                        <CaretSortIcon className="ml-2 h-4 w-4" />
+                    </Button>
                 )
-            },
-            cell: ({ row }) => {
-                return <div className="text-left font-medium">$ {row?.original?.amount}</div>
-            },
-        },
-        {
-            accessorKey: "createdAt",
-            header: () => <div className="text-left">Payment At</div>,
-            cell: ({ row }) => {
-                return <div className="text-left font-medium">{row.getValue("createdAt")}</div>
             },
         },
         {
             accessorKey: "status",
             header: () => <div className="text-left">Status</div>,
             cell: ({ row }) => {
-                return <div className="text-left font-medium"><Badge className="bg-purple-500 hover:bg-purple-600">{row.getValue("status")}</Badge></div>
+                const user = row.original;
+                return (
+                    <Button
+                        variant="link"
+                        onClick={() => handleStatusClick(user)}
+                        className="text-left font-medium"
+                    >
+                        <Badge className={user.status === "active" ? "bg-green-500" : "bg-red-500"}>
+                            {user.status}
+                        </Badge>
+                    </Button>
+                );
+            },
+        },
+        {
+            accessorKey: "createdAt",
+            header: () => <div className="text-left">Joined At</div>,
+            cell: ({ row }) => {
+                return <div className="text-left font-medium">{row.getValue("createdAt")}</div>
             },
         },
     ]
@@ -168,7 +202,15 @@ const PaymentHistoryTable = () => {
     }
     return (
         <div className="w-full">
-            <div className="flex items-center justify-end py-4">
+            <div className="flex items-center py-4">
+                <Input
+                    placeholder="Filter emails..."
+                    value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+                    onChange={(event) =>
+                        table.getColumn("email")?.setFilterValue(event.target.value)
+                    }
+                    className="max-w-sm"
+                />
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto">
@@ -270,8 +312,16 @@ const PaymentHistoryTable = () => {
                     </Button>
                 </div>
             </div>
+            {selectedUser && (
+                <UserStatusDialog
+                    isOpen={dialogOpen}
+                    onClose={() => setDialogOpen(false)}
+                    onConfirm={handleStatusConfirm}
+                    selectedUser={selectedUser}
+                />
+            )}
         </div>
     );
 };
 
-export default PaymentHistoryTable
+export default UserTable
