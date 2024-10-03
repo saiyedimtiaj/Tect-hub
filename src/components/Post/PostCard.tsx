@@ -40,7 +40,7 @@ const PostCard = ({ post, refetch }: Props) => {
         });
     };
 
-    const shareUrl = `http://localhost:3000/news-feed/${post?._id}`;
+    const shareUrl = `https://tech-hub-ruddy.vercel.app/news-feed/${post?._id}`;
 
     return (
         <div className='bg-white rounded shadow-sm px-4 py-2 border my-4' ref={targetRef}>

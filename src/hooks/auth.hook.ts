@@ -1,5 +1,6 @@
 import {
   changePassword,
+  createAdmin,
   createUser,
   getUserInfo,
   getUserProfile,
@@ -16,6 +17,18 @@ export const useUserRegistation = () => {
     mutationFn: async (userData: TCreateUser) => await createUser(userData),
     onSuccess: (data) => {
       toast.success(data?.message);
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+export const useCreateAdmin = () => {
+  return useMutation({
+    mutationKey: ["USER_REGISTATION"],
+    mutationFn: async (userData: TCreateUser) => await createAdmin(userData),
+    onSuccess: () => {
+      toast.success("create admin sucessful!");
     },
     onError: (error) => {
       toast.error(error.message);
@@ -42,6 +55,7 @@ export const useUserLogin = () => {
       toast.success(data?.message);
     },
     onError: (error) => {
+      console.log(error);
       toast.error(error.message);
     },
   });

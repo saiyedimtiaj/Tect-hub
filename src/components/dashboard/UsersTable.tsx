@@ -38,6 +38,8 @@ import SkeletonRow from "../Scaleton/SkeletonRow"
 import { useGetAllUser, useUpdateUserRole } from "@/hooks/user.hooks"
 import { CaretSortIcon } from "@radix-ui/react-icons"
 import UserStatusDialog from "../Modal/UserStatusDialog"
+import AddAdmin from "../Modal/AddAdmin"
+import { useCreateAdmin } from "@/hooks/auth.hook"
 
 
 const UserTable = () => {
@@ -52,6 +54,8 @@ const UserTable = () => {
     const [rowSelection, setRowSelection] = useState({})
     const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
+    const [open, setOpen] = useState(false);
+    const { mutate: createAdmin } = useCreateAdmin()
 
     const handleStatusClick = (user: TUser) => {
         setSelectedUser(user);
@@ -146,6 +150,18 @@ const UserTable = () => {
             },
         },
         {
+            accessorKey: "status",
+            header: () => <div className="">Role</div>,
+            cell: ({ row }) => {
+                const user = row.original;
+                return (
+                    <Badge className={"bg-blue-500"}>
+                        {user.role}
+                    </Badge>
+                );
+            },
+        },
+        {
             accessorKey: "createdAt",
             header: () => <div className="text-left">Joined At</div>,
             cell: ({ row }) => {
@@ -203,8 +219,8 @@ const UserTable = () => {
         return "Something went wrong!"
     }
     return (
-        <div className="w-full">
-            <div className="flex items-center py-4">
+        <div>
+            <div className="flex items-center flex-wrap py-4">
                 <Input
                     placeholder="Filter emails..."
                     value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
@@ -240,6 +256,7 @@ const UserTable = () => {
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
+            <Button className="ml-1 flex justify-end mb-4" onClick={() => setOpen(true)}>Add Admin</Button>
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>
@@ -322,6 +339,8 @@ const UserTable = () => {
                     selectedUser={selectedUser}
                 />
             )}
+
+            <AddAdmin refetch={refetch} createAdmin={createAdmin} isOpen={open} onClose={() => setOpen(false)} />
         </div>
     );
 };

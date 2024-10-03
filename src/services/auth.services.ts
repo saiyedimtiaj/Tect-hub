@@ -16,6 +16,14 @@ export const createUser = async (userData: TCreateUser) => {
     throw new Error(err);
   }
 };
+export const createAdmin = async (userData: TCreateUser) => {
+  try {
+    const { data } = await axiosInstance.post("/auth/create-user", userData);
+    return data;
+  } catch (err: any) {
+    throw new Error(err);
+  }
+};
 export const changePassword = async (userData: any) => {
   try {
     const { data } = await axiosInstance.post(

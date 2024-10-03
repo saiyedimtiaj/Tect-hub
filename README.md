@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+  <h1>Tech Hub Website</h1>
+</div>
 
-## Getting Started
+# Tech Hub
 
-First, run the development server:
+## Introduction
+
+TechShare is a full-featured social networking website similar to Facebook, designed for tech enthusiasts to share, connect, and engage. Users can sign up, create posts, interact with others' posts, follow each other, and access exclusive premium content. The platform also supports an admin role for managing users, posts, and monitoring overall platform statistics.
+
+## Admin Account
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+   Email: admin@gmail.com
+   password: admin123
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## user Account
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+   Email: user@gmail.com
+   password: user123
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Project Description
 
-## Learn More
+This project is a full-stack tech hub website where users can interact in a community through posting, liking, commenting, and sharing content. Premium users have access to exclusive content, and admins have control over platform management, user activity, and performance reports. The website includes comprehensive user profiles, a dashboard for admins, and membership features for exclusive content access.
 
-To learn more about Next.js, take a look at the following resources:
+# Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### User Features:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Home Page: Contains a banner, top posts, pricing card, and latest newsfeed.
+- News Feed: Displays all posts with like, comment, share functionality. Users can download posts as PDFs.
+- User Profile: Displays user information including the number of posts, followers, following, and the ability to update the profile. Users can follow each other.
+- Search & Sorting: Users can search for posts and sort by relevance or date.
+- Post Management: Users can create, like, comment, share, and delete posts. Premium users can create premium posts visible only to other premium members.
+- Membership: Only premium users can access premium posts. Users can upgrade to a premium membership.
+- Forgot Password: Users can recover their accounts via email.
 
-## Deploy on Vercel
+### Admin Features:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Admin Dashboard: Shows statistics like the total number of posts, revenue, and active users. Admin can view charts for the last six months of posts and memberships.
+- User Management: Admin can view and block users.
+- Post Management: Admin can monitor and manage all posts.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Technology Stack
+
+- Frontend:
+  - Next js
+  - Tanstack Query
+  - ShadCN UI
+  - Tailwind CSS
+  - TypeScript
+- Backend:
+  - Node.js
+  - Express
+  - MongoDB (Mongoose)
+  - JWT for Authentication
+
+# Installation Guideline
+
+## Prerequisites
+
+- Node.js (v14 or later)
+- MongoDB (local or cloud-based)
+- npm or yarn package manager
+
+# Installation Steps
+
+- Clone the repository:
+
+```Bash
+git clone https://github.com/saiyedimtiaj/Tech-Hub-Server
+cd Owner avatar
+Tech-Hub-Server
+npm install
+npm run dev
+```
+
+# Environment Variables
+
+Create a .env file in the root directory with the following:
+
+```Bash
+PORT=port
+DB_URL=your mongodb uri
+
+JWT_ACCESS_SECRET=access_secret
+JWT_ACCESS_EXPIRES_IN=5d
+JWT_REFRESH_SECRET=refresh_secret
+JWT_REFRESH_EXPIRES_IN=1y
+NODE_ENV=production
+
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+
+STRIPE_SECRET_KEY= stripe secret key
+```
