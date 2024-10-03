@@ -133,7 +133,9 @@ const PostCard = ({ post, refetch }: Props) => {
                     )}
                 </div>
             </div>
-            <LikeComment postId={post?._id!} setShareIsOpen={setShareIsOpen} />
+            {
+                post?._id && <LikeComment postId={post?._id} setShareIsOpen={setShareIsOpen} />
+            }
 
             {/* Share Buttons */}
 

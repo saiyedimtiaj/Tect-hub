@@ -6,7 +6,7 @@ import {
   logInUser,
   updateUser,
 } from "@/services/auth.services";
-import { TCreateUser, TLoginUser, TUser } from "@/types";
+import { TCreateUser, TLoginUser } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
