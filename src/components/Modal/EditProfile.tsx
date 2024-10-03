@@ -25,7 +25,7 @@ interface EditProfileProps {
 const EditProfile: FC<EditProfileProps> = ({ isOpen, onOpenChange }) => {
     const { user } = useUser();
     const [image, setImage] = useState<string | undefined>(user?.profile);
-    const [file, setFile] = useState<any>();
+    const [file, setFile] = useState<File | null>();
     const { mutate: updateUser, isPending } = useUpdateUser()
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
