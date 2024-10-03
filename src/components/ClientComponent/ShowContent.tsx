@@ -4,6 +4,7 @@ import React from 'react'
 // import { convertToRaw } from 'draft-js';
 
 const ShowContent = ({ content }: { content: string }) => {
+    console.log(content)
     // const contentState = convertFromRaw(JSON.parse(content));
     // const editorState = EditorState.createWithContent(contentState);
     return (
