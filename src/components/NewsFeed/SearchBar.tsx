@@ -15,10 +15,11 @@ import { Separator } from '../ui/separator';
 
 type Props = {
     sort: string;
-    setSort: Dispatch<SetStateAction<string>>
+    setSort: Dispatch<SetStateAction<string>>;
+    refetch: any
 }
 
-const SearchBar = ({ sort, setSort }: Props) => {
+const SearchBar = ({ sort, setSort, refetch }: Props) => {
     const { register, handleSubmit, watch } = useForm();
     const { mutate: handleSearch, data, isPending, isSuccess } = useGetSearchItem();
     const [searchResults, setSearchResults] = useState<IPost[] | []>([]);
@@ -43,10 +44,13 @@ const SearchBar = ({ sort, setSort }: Props) => {
     const handleSort = () => {
         if (sort === "") {
             setSort("asc")
+            refetch()
         } else if (sort === "asc") {
             setSort("desc")
+            refetch()
         } else {
             setSort("asc")
+            refetch()
         }
     }
 

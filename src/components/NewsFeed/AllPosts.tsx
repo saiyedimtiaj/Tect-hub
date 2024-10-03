@@ -17,7 +17,7 @@ const AllPosts = () => {
     const [open, setIsOpen] = useState(false);
     const [sort, setSort] = useState('')
     const [limit, setLimit] = useState(3);
-    const { data, refetch, isFetching, isLoading, error } = useAllPosts(limit);
+    const { data, refetch, isFetching, isLoading, error } = useAllPosts(limit, sort);
     const { user } = useUser();
     const postRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -68,9 +68,10 @@ const AllPosts = () => {
         return <div className="text-red-500">Error loading posts: {error.message}</div>;
     }
 
+
     return (
         <div>
-            <SearchBar sort={sort} setSort={setSort} />
+            <SearchBar sort={sort} setSort={setSort} refetch={refetch} />
             <div onClick={() => setIsOpen(true)} className="w-full cursor-pointer bg-white p-3 rounded-md shadow-sm">
                 <div className="flex items-center gap-2.5 w-full border border-t-0 border-l-0 border-r-0 pb-3">
                     <Image width={40} height={40} alt="profile" src={user?.profile ? user?.profile : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} className="rounded-full object-cover" />

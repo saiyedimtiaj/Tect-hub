@@ -16,6 +16,7 @@ import { Trash } from 'lucide-react';
 import DeletePostModal from '../Modal/DeletePostModal';
 import { useDeletePost } from '@/hooks/post.hooks';
 import ShareDialog from '../Modal/ShareDialog';
+import { envConfig } from '@/config/envConfig';
 
 type Props = {
     post: IPost;
@@ -46,7 +47,7 @@ const PostCard = ({ post, refetch }: Props) => {
         });
     };
 
-    const shareUrl = `${window.location.origin}/news-feed/${post?._id}`;
+    const shareUrl = `http://localhost:3000/news-feed/${post?._id}`;
 
     return (
         <div className='bg-white rounded shadow-sm px-4 py-2 border my-4' ref={targetRef}>

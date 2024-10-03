@@ -27,6 +27,7 @@ export default function Navbar() {
     const handleLogout = async () => {
         if (commonRoute.includes(pathname)) {
             await logoutUser();
+            setIsLoading(true);
             return;
         } else {
             await logoutUser();

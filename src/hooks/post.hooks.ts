@@ -35,10 +35,10 @@ export const useGetUserAllPosts = (id: string) => {
     queryFn: async () => await getUserPosts(id),
   });
 };
-export const useAllPosts = (limit: number) => {
+export const useAllPosts = (limit: number, sort: string) => {
   return useQuery<any, Error, any, string[]>({
     queryKey: ["All_POST"],
-    queryFn: async () => await getAllPosts(limit),
+    queryFn: async () => await getAllPosts(limit, sort),
   });
 };
 export const useGetSinglePosts = (id: string) => {
