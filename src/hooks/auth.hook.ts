@@ -1,4 +1,5 @@
 import {
+  changePassword,
   createUser,
   getUserInfo,
   getUserProfile,
@@ -13,6 +14,18 @@ export const useUserRegistation = () => {
   return useMutation({
     mutationKey: ["USER_REGISTATION"],
     mutationFn: async (userData: TCreateUser) => await createUser(userData),
+    onSuccess: (data) => {
+      toast.success(data?.message);
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+export const useChangePassword = () => {
+  return useMutation({
+    mutationKey: ["PASSWORD"],
+    mutationFn: async (userData: any) => await changePassword(userData),
     onSuccess: (data) => {
       toast.success(data?.message);
     },

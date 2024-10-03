@@ -7,26 +7,34 @@ import { useUser } from "@/provider/user.provider";
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuItem,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 import { logoutUser } from "@/services/auth.services";
 import logo from "../../../public/assets/download.svg";
-import { Input } from "../ui/input";
-import { IoSearch } from "react-icons/io5";
 import { ImSwitch } from "react-icons/im";
+import { usePathname, useRouter } from "next/navigation";
+import React from "react";
 
 export default function Navbar() {
     const { user, setIsLoading } = useUser();
+    const pathname = usePathname();
+
+    const commonRoute = ["/about", "/contact"];
+    const router = useRouter();
 
     const handleLogout = async () => {
-        await logoutUser();
-        setIsLoading(true);
+        if (commonRoute.includes(pathname)) {
+            await logoutUser();
+            return;
+        } else {
+            await logoutUser();
+            router.push("/");
+            setIsLoading(true);
+        }
     };
 
-    // Corrected navItems array with 'name' and 'href'
     const navItems = [
         { name: "Home", href: "/" },
         { name: "About", href: "/about" },
@@ -41,20 +49,28 @@ export default function Navbar() {
                     <Image src={user?.profile!} width={36} height={36} alt="Avatar" className="overflow-hidden rounded-full" />
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-                <div className="flex gap-2">
-                    <Image src={user?.profile!} width={40} height={40} alt="Avatar" className="overflow-hidden rounded-md object-cover" />
-                    <div className="px-2 py-1">
+            <DropdownMenuContent align="end" className="w-56 p-2 bg-white dark:bg-gray-800 shadow-lg rounded-md">
+                <div className="flex items-center gap-2 p-2">
+                    <Image src={user?.profile!} width={40} height={40} alt="Avatar" className="rounded-md object-cover" />
+                    <div>
                         <h1 className="font-semibold">{user?.name}</h1>
-                        <p className="text-xs">{user?.email}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">{user?.email}</p>
                     </div>
                 </div>
                 <DropdownMenuSeparator />
-                <button className="bg-[#0F6FEC] text-white font-medium w-[200px] text-sm py-2">
-                    <Link href="/profile">Profile</Link>
+                <button className="bg-[#0F6FEC] text-white font-medium w-full text-sm py-2 rounded-md">
+                    <Link href="/profile" className="block w-full text-center">Profile</Link>
                 </button>
+                {user?.role === "admin" && (
+                    <>
+                        <DropdownMenuSeparator />
+                        <button className="bg-gray-100 dark:bg-gray-700 font-medium w-full text-sm py-2 rounded-md">
+                            <Link href="/dashboard" className="block w-full text-center">Admin Dashboard</Link>
+                        </button>
+                    </>
+                )}
                 <DropdownMenuSeparator />
-                <button className="flex items-center justify-center gap-2 py-2 text-sm mt-2 mb-2 w-full border border-l-0 border-r-0" onClick={handleLogout}>
+                <button className="flex items-center justify-center gap-2 py-2 text-sm w-full border-t" onClick={handleLogout}>
                     <ImSwitch />
                     Logout
                 </button>
@@ -69,12 +85,6 @@ export default function Navbar() {
                 <Link href="/" className="font-semibold text-xl md:text-2xl flex" prefetch={false}>
                     <Image width={40} height={40} src={logo} alt="logo" />
                 </Link>
-                <form className="relative">
-                    <Input className="pl-8 pr-2 py-3 bg-[#ffffff]" placeholder="Search here.." />
-                    <button type="submit" className="absolute left-2.5 top-2 text-gray-600">
-                        <IoSearch size={20} />
-                    </button>
-                </form>
             </div>
 
             {/* Desktop Navigation */}

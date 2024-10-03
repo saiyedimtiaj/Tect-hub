@@ -68,5 +68,6 @@ export const config = {
     "/news-feed",
     "/signin",
     "/register",
+    "/change-password",
   ],
 };

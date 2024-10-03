@@ -10,7 +10,7 @@ const Newsfeed = () => {
             <LeftSideProfile />
 
             {/* Middle Section - Posts */}
-            <div className="lg:w-2/4 w-full px-6 pb-5">
+            <div className="lg:w-2/4 w-full lg:px-6 pb-5">
                 <AllPosts />
             </div>
 

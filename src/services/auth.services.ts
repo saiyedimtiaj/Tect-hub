@@ -16,6 +16,17 @@ export const createUser = async (userData: TCreateUser) => {
     throw new Error(err);
   }
 };
+export const changePassword = async (userData: any) => {
+  try {
+    const { data } = await axiosInstance.post(
+      "/auth/change-password",
+      userData
+    );
+    return data;
+  } catch (err: any) {
+    throw new Error(err);
+  }
+};
 
 export const logInUser = async (userData: TLoginUser) => {
   try {

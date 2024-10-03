@@ -14,6 +14,8 @@ const LeftSideProfile = () => {
         return <LeftSideProfileSkeleton />;
     }
 
+    console.log(data)
+
     return (
         <div className="hidden lg:block w-1/4 p-6 bg-white">
             <div className="relative mb-4">
@@ -40,15 +42,15 @@ const LeftSideProfile = () => {
                 <p className="text-sm text-gray-600">{data?.data?.bio}</p>
                 <div className="flex justify-between mt-4 text-gray-800">
                     <div>
-                        <p className="font-bold">100</p>
+                        <p className="font-bold">{data?.data?.postCount}</p>
                         <p>Posts</p>
                     </div>
                     <div>
-                        <p className="font-bold">1.2K</p>
+                        <p className="font-bold">{data?.data?.followers?.length}</p>
                         <p>Followers</p>
                     </div>
                     <div>
-                        <p className="font-bold">350</p>
+                        <p className="font-bold">{data?.data?.following?.length}</p>
                         <p>Following</p>
                     </div>
                 </div>

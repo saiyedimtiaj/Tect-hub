@@ -14,7 +14,8 @@ import AddPost from "../Modal/AddPost"
 import SearchBar from "./SearchBar"
 
 const AllPosts = () => {
-    const [open, setIsOpen] = useState(false)
+    const [open, setIsOpen] = useState(false);
+    const [sort, setSort] = useState('')
     const [limit, setLimit] = useState(3);
     const { data, refetch, isFetching, isLoading, error } = useAllPosts(limit);
     const { user } = useUser();
@@ -29,7 +30,6 @@ const AllPosts = () => {
                         setLimit(prevLimit => prevLimit + 3); // Increment limit to load more posts
                         refetch();
                         return
-                    } else {
                     }
                 }
             });
@@ -70,7 +70,7 @@ const AllPosts = () => {
 
     return (
         <div>
-            <SearchBar />
+            <SearchBar sort={sort} setSort={setSort} />
             <div onClick={() => setIsOpen(true)} className="w-full cursor-pointer bg-white p-3 rounded-md shadow-sm">
                 <div className="flex items-center gap-2.5 w-full border border-t-0 border-l-0 border-r-0 pb-3">
                     <Image width={40} height={40} alt="profile" src={user?.profile ? user?.profile : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} className="rounded-full object-cover" />

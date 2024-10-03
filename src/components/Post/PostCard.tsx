@@ -1,3 +1,4 @@
+"use client"
 import { IPost } from '@/types';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -10,11 +11,11 @@ import { usePathname } from 'next/navigation';
 import { TfiDownload } from "react-icons/tfi";
 import { usePDF } from 'react-to-pdf';
 import Link from 'next/link';
-import badge from "../../../public/assets/stamp.png"
-import { Button } from '../ui/button';
+import badge from "../../../public/assets/stamp.png";
 import { Trash } from 'lucide-react';
 import DeletePostModal from '../Modal/DeletePostModal';
 import { useDeletePost } from '@/hooks/post.hooks';
+import ShareDialog from '../Modal/ShareDialog';
 
 type Props = {
     post: IPost;
@@ -26,12 +27,12 @@ const PostCard = ({ post, refetch }: Props) => {
     const images = post?.images || [];
     const { toPDF, targetRef } = usePDF({ filename: 'page.pdf' });
     const [isOpen, setIsOpen] = useState(false);
-    const { mutate: deletePost } = useDeletePost()
+    const { mutate: deletePost } = useDeletePost();
+    const [shareIsOpen, setShareIsOpen] = useState(false)
 
     // Convert the stored state to the Draft.js editor state
     const contentState = convertFromRaw(JSON.parse(post?.content));
     const editorState = EditorState.createWithContent(contentState);
-
 
     const currentDate = new Date();
     const membershipEndDate = new Date(post?.userId?.membershipEnd!);
@@ -42,8 +43,10 @@ const PostCard = ({ post, refetch }: Props) => {
             onSuccess: () => {
                 refetch()
             }
-        })
-    }
+        });
+    };
+
+    const shareUrl = `${window.location.origin}/news-feed/${post?._id}`;
 
     return (
         <div className='bg-white rounded shadow-sm px-4 py-2 border my-4' ref={targetRef}>
@@ -130,7 +133,12 @@ const PostCard = ({ post, refetch }: Props) => {
                     )}
                 </div>
             </div>
-            <LikeComment postId={post?._id!} />
+            <LikeComment postId={post?._id!} setShareIsOpen={setShareIsOpen} />
+
+            {/* Share Buttons */}
+
+            <ShareDialog isOpen={shareIsOpen} onClose={() => setShareIsOpen(false)} url={shareUrl} />
+
             <DeletePostModal isOpen={isOpen} onClose={() => setIsOpen(false)} onConfirm={handleDelete} />
         </div>
     );

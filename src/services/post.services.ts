@@ -52,3 +52,13 @@ export const deletePost = async (id: string) => {
     throw new Error(err);
   }
 };
+export const searchPost = async (searchTerm: string) => {
+  try {
+    const { data } = await axiosInstance.get(
+      `/post/search?searchTrams=${searchTerm}`
+    );
+    return data;
+  } catch (err: any) {
+    throw new Error(err);
+  }
+};

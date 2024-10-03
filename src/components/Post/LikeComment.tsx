@@ -14,7 +14,7 @@ import { useAddOrRemoveVote } from '@/hooks/vote.hook';
 import { motion } from 'framer-motion';
 import LikeCommentSkeleton from '../Scaleton/LikeCommentSkeleton';
 
-const LikeComment = ({ postId }: { postId: string }) => {
+const LikeComment = ({ postId, setShareIsOpen }: { postId: string, setShareIsOpen: any }) => {
     const { user } = useUser();
 
     const { data: commentData, refetch: commentRefetch, isLoading } = useQuery<any, Error, any, string[]>({
@@ -69,7 +69,7 @@ const LikeComment = ({ postId }: { postId: string }) => {
                         <span className='text-purple-600'>Comment ({commentData?.data?.data?.length})</span>
                     </div>
                 </div>
-                <div className='flex items-center gap-1'>
+                <div className='flex items-center gap-1' onClick={() => setShareIsOpen(true)}>
                     <button><FaShare className='text-gray-500' size={20} /></button>
                     <span className='text-gray-500'>Share</span>
                 </div>
