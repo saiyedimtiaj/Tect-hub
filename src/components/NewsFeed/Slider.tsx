@@ -35,17 +35,14 @@ const Slider = () => {
                         disableOnInteraction: false, // Keeps autoplay even if user interacts
                     }}
                     breakpoints={{
-                        // when window width is >= 320px
                         320: {
                             slidesPerView: 1,
                             spaceBetween: 10,
                         },
-                        // when window width is >= 640px
                         500: {
                             slidesPerView: 2,
                             spaceBetween: 10,
                         },
-                        // when window width is >= 1024px
                         680: {
                             slidesPerView: 3,
                             spaceBetween: 10,

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
 import { Label } from '../ui/label';
 import {
@@ -9,13 +9,18 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { Input } from '../ui/input';
+import dynamic from 'next/dynamic';
 import { EditorState, convertToRaw } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useCreatePost } from '@/hooks/post.hooks';
 import { useGetUser } from '@/hooks/auth.hook';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+
+// Dynamically import the Editor component
+const Editor = dynamic(
+    () => import('react-draft-wysiwyg').then(mod => mod.Editor),
+    { ssr: false } // Prevent server-side rendering
+);
 
 interface AddPostProps {
     isOpen: boolean;
@@ -30,7 +35,7 @@ const AddPost = ({ isOpen, onOpenChange }: AddPostProps) => {
     const { mutate: createPost, isPending } = useCreatePost();
     const [postType, setPostType] = useState("besic");
     const { data, isLoading } = useGetUser();
-    const router = useRouter()
+    const router = useRouter();
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || []);
@@ -69,29 +74,27 @@ const AddPost = ({ isOpen, onOpenChange }: AddPostProps) => {
 
         createPost(formData, {
             onSuccess: () => {
-                onOpenChange(false)
+                onOpenChange(false);
             },
             onError: () => {
-                onOpenChange(false)
+                onOpenChange(false);
             }
         });
     };
 
     if (isLoading) {
-        return <>Loading...</>
+        return <>Loading...</>;
     }
 
-    const user = data?.data
-
+    const user = data?.data;
     const isTimeOut = user?.membershipEnd < new Date().toISOString();
     const handlePrimum = () => {
         if (user?.membershipEnd && !isTimeOut) {
-            setPostType("primum")
+            setPostType("primum");
         } else {
-            router.push("/payment")
+            router.push("/payment");
         }
-
-    }
+    };
 
     return (
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -152,8 +155,8 @@ const AddPost = ({ isOpen, onOpenChange }: AddPostProps) => {
                             <div onClick={() => setPostType("besic")} className={`text-center text-sm font-semibold w-full py-2.5 cursor-pointer rounded-md ${postType === "besic" ? "border-2 border-black" : "border"}`}>
                                 Besic
                             </div>
-                            <div onClick={handlePrimum} className={`text-center cursor-pointer  w-full flex justify-center items-end gap-1 py-2 rounded-md ${postType === "prymium" ? "border-2 border-black" : "border"}`}>
-                                <span className='text-sm font-semibold'>primum</span>
+                            <div onClick={handlePrimum} className={`text-center cursor-pointer w-full flex justify-center items-end gap-1 py-2 rounded-md ${postType === "prymium" ? "border-2 border-black" : "border"}`}>
+                                <span className='text-sm font-semibold'>Primum</span>
                                 <span className='text-xs'>/20$ per month</span>
                             </div>
                         </div>
@@ -162,6 +165,7 @@ const AddPost = ({ isOpen, onOpenChange }: AddPostProps) => {
                     <div>
                         <Label htmlFor="editor">Content</Label>
                         <div className="border border-gray-300 rounded-md min-h-[200px] max-h-[300px] overflow-y-auto">
+                            {/* Dynamically rendered editor */}
                             <Editor
                                 editorState={editorState}
                                 onEditorStateChange={setEditorState}
