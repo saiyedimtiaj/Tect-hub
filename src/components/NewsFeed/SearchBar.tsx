@@ -6,13 +6,11 @@ import { useForm } from "react-hook-form"
 import { IPost } from '@/types';
 import { useDevounce } from '@/hooks/debounce.hook';
 import { useGetSearchItem } from '@/hooks/post.hooks';
-import { EditorState, convertFromRaw } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
-import { convertToRaw } from 'draft-js';
 import { Button } from '../ui/button';
 import { FaSort } from 'react-icons/fa';
 import { Separator } from '../ui/separator';
 import Image from 'next/image';
+import ShowContent from '../ClientComponent/ShowContent';
 
 type Props = {
     sort: string;
@@ -82,8 +80,6 @@ const SearchBar = ({ sort, setSort, refetch }: Props) => {
                 <div className="mt-2 bg-white rounded-xl bg-default-100 p-3">
                     <div className="space-y-3">
                         {searchResults.map((item) => {
-                            const contentState = convertFromRaw(JSON.parse(item?.content));
-                            const editorState = EditorState.createWithContent(contentState);
                             return (
                                 <Link
                                     key={item._id} // Corrected the key attribute
@@ -100,7 +96,7 @@ const SearchBar = ({ sort, setSort, refetch }: Props) => {
                                         />
                                         <div>
                                             <p>
-                                                <div dangerouslySetInnerHTML={{ __html: draftToHtml(convertToRaw(editorState.getCurrentContent())) }} />
+                                                <ShowContent content={item.content} />
                                             </p>
                                         </div>
                                     </div>

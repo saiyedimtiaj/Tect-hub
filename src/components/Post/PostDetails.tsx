@@ -5,10 +5,8 @@ import LikeCommentShare from './LikeCommentShare';
 import Image from 'next/image';
 import { useParams } from "next/navigation";
 import { useGetSinglePosts } from "@/hooks/post.hooks";
-import { EditorState, convertFromRaw } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
-import { convertToRaw } from 'draft-js';
 import Loading from "../shared/Loading";
+import ShowContent from "../ClientComponent/ShowContent";
 
 const PostDetails = () => {
     const { id } = useParams();
@@ -17,9 +15,6 @@ const PostDetails = () => {
     if (isLoading) {
         return <Loading />
     }
-
-    const contentState = convertFromRaw(JSON.parse(data?.data?.content));
-    const editorState = EditorState.createWithContent(contentState);
 
 
     return (
@@ -39,7 +34,11 @@ const PostDetails = () => {
                     </div>
                 </div>
 
-                <div className="mb-6" dangerouslySetInnerHTML={{ __html: draftToHtml(convertToRaw(editorState.getCurrentContent())) }} />
+                <div className="mb-5">
+                    {
+                        data?.data?.content && <ShowContent content={data?.data?.content} />
+                    }
+                </div>
 
                 <div>
                     <Separator className="mb-2" />

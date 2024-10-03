@@ -4,20 +4,9 @@ import { motion } from "framer-motion";
 import { ThumbsUp } from "lucide-react";
 import { TMostLikePost } from "@/types";
 import Image from "next/image";
-import { EditorState, convertFromRaw } from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import { convertToRaw } from "draft-js";
+import ShowContent from "../ClientComponent/ShowContent";
 
 const MostLikedSection = ({ post }: { post: TMostLikePost }) => {
-    let editorState;
-    try {
-        const contentState = convertFromRaw(JSON.parse(post?.postDetails?.content));
-        editorState = EditorState.createWithContent(contentState);
-    } catch (error) {
-        console.error("Error converting post content:", error);
-        editorState = EditorState.createEmpty(); // Fallback to empty content
-    }
-
     const imageSrc = post?.postDetails?.images?.[0]; // Safely check if the image exists
 
     return (
@@ -38,10 +27,11 @@ const MostLikedSection = ({ post }: { post: TMostLikePost }) => {
                 <div>
                     <div
                         className="text-gray-600 inline-block dark:text-gray-300"
-                        dangerouslySetInnerHTML={{
-                            __html: draftToHtml(convertToRaw(editorState.getCurrentContent())).slice(0, 110),
-                        }}
-                    />
+                    >
+                        {
+                            post?.postDetails?.content && <ShowContent content={post?.postDetails?.content} />
+                        }
+                    </div>
                 </div>
                 <div className="flex items-center mt-4">
                     <Image

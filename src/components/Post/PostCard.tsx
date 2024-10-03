@@ -3,9 +3,6 @@ import { IPost } from '@/types';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import moment from 'moment';
-import { EditorState, convertFromRaw } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
-import { convertToRaw } from 'draft-js';
 import LikeComment from './LikeComment';
 import { usePathname } from 'next/navigation';
 import { TfiDownload } from "react-icons/tfi";
@@ -16,6 +13,7 @@ import { Trash } from 'lucide-react';
 import DeletePostModal from '../Modal/DeletePostModal';
 import { useDeletePost } from '@/hooks/post.hooks';
 import ShareDialog from '../Modal/ShareDialog';
+import ShowContent from '../ClientComponent/ShowContent';
 
 type Props = {
     post: IPost;
@@ -29,10 +27,6 @@ const PostCard = ({ post, refetch }: Props) => {
     const [isOpen, setIsOpen] = useState(false);
     const { mutate: deletePost } = useDeletePost();
     const [shareIsOpen, setShareIsOpen] = useState(false)
-
-    // Convert the stored state to the Draft.js editor state
-    const contentState = convertFromRaw(JSON.parse(post?.content));
-    const editorState = EditorState.createWithContent(contentState);
 
     const currentDate = new Date();
     const membershipEndDate = new Date(post?.userId?.membershipEnd as Date);
@@ -83,8 +77,7 @@ const PostCard = ({ post, refetch }: Props) => {
                     </div>
                 </div>
                 <div className="text-area mt-1">
-                    {/* Displaying the content from the draft.js editor */}
-                    <div dangerouslySetInnerHTML={{ __html: draftToHtml(convertToRaw(editorState.getCurrentContent())) }} />
+                    <ShowContent content={post.content} />
                 </div>
                 <div className='my-1 flex'>
                     {
