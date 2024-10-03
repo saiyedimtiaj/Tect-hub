@@ -47,12 +47,12 @@ export default function Navbar() {
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="icon" className="overflow-hidden rounded-full">
-                    <Image src={user?.profile!} width={36} height={36} alt="Avatar" className="overflow-hidden rounded-full" />
+                    <Image src={user?.profile || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} width={36} height={36} alt="Avatar" className="overflow-hidden rounded-full" />
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56 p-2 bg-white dark:bg-gray-800 shadow-lg rounded-md">
                 <div className="flex items-center gap-2 p-2">
-                    <Image src={user?.profile!} width={40} height={40} alt="Avatar" className="rounded-md object-cover" />
+                    <Image src={user?.profile || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} width={40} height={40} alt="Avatar" className="rounded-md object-cover" />
                     <div>
                         <h1 className="font-semibold">{user?.name}</h1>
                         <p className="text-xs text-gray-500 dark:text-gray-400">{user?.email}</p>

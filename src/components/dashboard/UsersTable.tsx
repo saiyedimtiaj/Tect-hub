@@ -59,15 +59,17 @@ const UserTable = () => {
     };
 
     const handleStatusConfirm = () => {
-        const payloed = {
-            id: selectedUser?._id!,
-            status: selectedUser?.status === "active" ? "block" : "active"
-        }
-        updateStatus(payloed, {
-            onSuccess: () => {
-                refetch()
+        if (selectedUser?._id) {
+            const payloed = {
+                id: selectedUser?._id,
+                status: selectedUser?.status === "active" ? "block" : "active"
             }
-        })
+            updateStatus(payloed, {
+                onSuccess: () => {
+                    refetch()
+                }
+            })
+        }
     };
 
 

@@ -29,7 +29,7 @@ const UserInfo = () => {
     const isFollow = user?.followers?.find((u: { userId: string }) => u.userId === meAsUser?._id)
 
     const currentDate = new Date();
-    const membershipEndDate = new Date(user?.membershipEnd!);
+    const membershipEndDate = new Date(user?.membershipEnd);
     const isTimeOut = membershipEndDate < currentDate;
 
     return (

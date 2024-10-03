@@ -35,7 +35,7 @@ const PostCard = ({ post, refetch }: Props) => {
     const editorState = EditorState.createWithContent(contentState);
 
     const currentDate = new Date();
-    const membershipEndDate = new Date(post?.userId?.membershipEnd!);
+    const membershipEndDate = new Date(post?.userId?.membershipEnd as Date);
     const isTimeOut = membershipEndDate < currentDate;
 
     const handleDelete = () => {

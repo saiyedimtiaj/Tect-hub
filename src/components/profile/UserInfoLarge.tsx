@@ -18,7 +18,7 @@ const UserInfoLarge: React.FC = () => {
     const user = data?.data
 
     const currentDate = new Date();
-    const membershipEndDate = new Date(user?.membershipEnd!);
+    const membershipEndDate = new Date(user?.membershipEnd);
     const isTimeOut = membershipEndDate < currentDate;
 
 

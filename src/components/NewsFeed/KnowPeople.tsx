@@ -26,7 +26,7 @@ const KnowPeople = () => {
             <h1 className="text-xl font-semibold mb-6">People may you Know</h1>
             {
                 data?.data?.map((user: TUser) => <div key={user?._id} className="flex items-start gap-2">
-                    <Image src={user?.profile!} width={48} height={48} alt="profile" className="object-cover rounded-full" />
+                    <Image src={user?.profile} width={48} height={48} alt="profile" className="object-cover rounded-full" />
                     <div>
                         <h1 className="font-medium">{user?.name}</h1>
                         <Badge onClick={() => handleFollowRequest(user?._id)} className="bg-blue-600 cursor-pointer">Follow</Badge>

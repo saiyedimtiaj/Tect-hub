@@ -1,6 +1,6 @@
 "use server";
 import axiosInstance from "@/lib/axiosInstance";
-import { TCreateUser, TLoginUser, TUser } from "@/types";
+import { TCreateUser, TLoginUser } from "@/types";
 import { cookies } from "next/headers";
 import { jwtDecode } from "jwt-decode";
 

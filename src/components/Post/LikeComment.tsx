@@ -75,7 +75,7 @@ const LikeComment = ({ postId, setShareIsOpen }: { postId: string, setShareIsOpe
                 </div>
             </div>
             <div className='flex items-center gap-2'>
-                <Image src={user?.profile!} width={40} height={40} alt='User Avatar' className='rounded-full object-cover' />
+                <Image src={user?.profile || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} width={40} height={40} alt='User Avatar' className='rounded-full object-cover' />
                 <form onSubmit={handleComment} className='relative w-full'>
                     <Input name='comment' placeholder='Add a Comment...' className='w-full bg-[#EEF0F2] py-3' />
                     <button disabled={isComentLoading} type='submit' className='absolute right-3 top-2.5'>
@@ -86,7 +86,7 @@ const LikeComment = ({ postId, setShareIsOpen }: { postId: string, setShareIsOpe
             <div className='mt-5'>
                 {commentData?.data?.data?.slice(0, 2).map((coment: TComment) => (
                     <div key={coment?._id} className='flex gap-2 items-start my-2'>
-                        <Image src={coment?.userId?.profile!} width={40} height={40} alt='User Avatar' className='rounded-full object-cover w-10 h-10' />
+                        <Image src={coment?.userId?.profile} width={40} height={40} alt='User Avatar' className='rounded-full object-cover w-10 h-10' />
                         <div className='bg-[#EEF0F2] p-3 rounded-md w-full'>
                             <h1 className="text-lg font-semibold">{coment?.userId?.name}</h1>
                             <p className='text-sm'>{coment?.message}</p>
