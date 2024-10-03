@@ -16,7 +16,6 @@ import { Trash } from 'lucide-react';
 import DeletePostModal from '../Modal/DeletePostModal';
 import { useDeletePost } from '@/hooks/post.hooks';
 import ShareDialog from '../Modal/ShareDialog';
-import { envConfig } from '@/config/envConfig';
 
 type Props = {
     post: IPost;

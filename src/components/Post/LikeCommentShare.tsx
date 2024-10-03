@@ -29,7 +29,7 @@ const LikeCommentShare = ({ postId }: LikeCommentShareProps) => {
     });
 
     const { mutate: createComent, isPending: isComentLoading } = useCreateComment(commentRefetch);
-    const { mutate: voteCOrR, isPending } = useAddOrRemoveVote(voteRefetch);
+    const { mutate: voteCOrR } = useAddOrRemoveVote(voteRefetch);
 
     const handleComment = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

@@ -12,6 +12,7 @@ import { convertToRaw } from 'draft-js';
 import { Button } from '../ui/button';
 import { FaSort } from 'react-icons/fa';
 import { Separator } from '../ui/separator';
+import Image from 'next/image';
 
 type Props = {
     sort: string;
@@ -20,8 +21,8 @@ type Props = {
 }
 
 const SearchBar = ({ sort, setSort, refetch }: Props) => {
-    const { register, handleSubmit, watch } = useForm();
-    const { mutate: handleSearch, data, isPending, isSuccess } = useGetSearchItem();
+    const { register, watch } = useForm();
+    const { mutate: handleSearch, data } = useGetSearchItem();
     const [searchResults, setSearchResults] = useState<IPost[] | []>([]);
 
     const searchTerm = useDevounce(watch("search"));
@@ -30,7 +31,7 @@ const SearchBar = ({ sort, setSort, refetch }: Props) => {
         if (searchTerm) {
             handleSearch(searchTerm);
         }
-    }, [searchTerm]);
+    }, [searchTerm, handleSearch]);
 
     useEffect(() => {
         if (!searchTerm) {
@@ -39,7 +40,7 @@ const SearchBar = ({ sort, setSort, refetch }: Props) => {
         else {
             setSearchResults(data?.data)
         }
-    }, [searchTerm]);
+    }, [searchTerm, data?.data]);
 
     const handleSort = () => {
         if (sort === "") {
@@ -90,8 +91,10 @@ const SearchBar = ({ sort, setSort, refetch }: Props) => {
                                     href={`/news-feed/${item._id}`}
                                 >
                                     <div className="flex items-center gap-2">
-                                        <img
-                                            alt={item._id}
+                                        <Image
+                                            width={48}
+                                            height={48}
+                                            alt={item?._id as string}
                                             className="h-14 w-14 rounded-md object-cover"
                                             src={item?.images[0]}
                                         />

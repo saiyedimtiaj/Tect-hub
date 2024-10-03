@@ -28,7 +28,7 @@ export default function AboutAndTeamPage() {
                             About Our Journey
                         </h2>
                         <p className="text-lg text-gray-600 mb-4">
-                            We've been delivering innovative solutions and services since our
+                            We&aposve been delivering innovative solutions and services since our
                             inception. Our mission is to empower businesses by providing
                             state-of-the-art technology and solutions.
                         </p>
@@ -147,7 +147,7 @@ export default function AboutAndTeamPage() {
             </section>
 
             <section className="mt-16 text-center bg-blue-600 py-16">
-                <h2 className="text-3xl font-bold text-white mb-4">Let's Get in Touch</h2>
+                <h2 className="text-3xl font-bold text-white mb-4">Let&aposs Get in Touch</h2>
                 <p className="text-white max-w-2xl mx-auto mb-6 text-lg">
                     Have any questions or want to collaborate with us? We’d love to hear from you!
                 </p>

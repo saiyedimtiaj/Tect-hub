@@ -1,5 +1,4 @@
-import { Button } from "../ui/button"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogHeader } from "../ui/dialog"
 import { FacebookIcon, FacebookShareButton, TwitterIcon, TwitterShareButton } from 'react-share';
 
 interface Props {

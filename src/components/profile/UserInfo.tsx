@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React from 'react';
 import Image from "next/image";
 import banner from "../../../public/assets/cover.jpg";
 import Loading from '../shared/Loading';

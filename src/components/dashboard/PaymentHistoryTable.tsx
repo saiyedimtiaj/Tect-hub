@@ -14,7 +14,7 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown } from "lucide-react"
+import { ChevronDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -24,7 +24,6 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
 import {
     Table,
     TableBody,
@@ -48,7 +47,6 @@ const PaymentHistoryTable = () => {
     const [columnVisibility, setColumnVisibility] =
         useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = useState({})
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
 
 
@@ -93,7 +91,7 @@ const PaymentHistoryTable = () => {
         },
         {
             accessorKey: "price",
-            header: ({ column }) => {
+            header: () => {
                 return (
                     "Price"
                 )

@@ -28,7 +28,7 @@ const MostLikedSection = ({ post }: { post: TMostLikePost }) => {
             className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
         >
             {imageSrc ? (
-                <img src={imageSrc} alt="Post" className="w-full h-48 object-cover" />
+                <Image width={490} height={190} src={imageSrc} alt="Post" className="w-full h-48 object-cover" />
             ) : (
                 <div className="w-full h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
                     <span className="text-gray-500 dark:text-gray-400">No image available</span>

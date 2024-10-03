@@ -1,4 +1,3 @@
-import Loading from '@/components/shared/Loading'
 import React from 'react'
 
 const loading = () => {

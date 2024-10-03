@@ -15,6 +15,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useCreatePost } from '@/hooks/post.hooks';
 import { useGetUser } from '@/hooks/auth.hook';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 interface AddPostProps {
     isOpen: boolean;
@@ -28,7 +29,7 @@ const AddPost = ({ isOpen, onOpenChange }: AddPostProps) => {
     const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
     const { mutate: createPost, isPending } = useCreatePost();
     const [postType, setPostType] = useState("besic");
-    const { data, isLoading, isFetching } = useGetUser();
+    const { data, isLoading } = useGetUser();
     const router = useRouter()
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -133,7 +134,9 @@ const AddPost = ({ isOpen, onOpenChange }: AddPostProps) => {
                                     key={index}
                                     className="relative w-32 h-32 rounded-xl border-2 border-dashed border-default-300 p-2"
                                 >
-                                    <img
+                                    <Image
+                                        width={400}
+                                        height={400}
                                         alt={`Uploaded preview ${index + 1}`}
                                         className="h-full w-full object-cover object-center rounded-md"
                                         src={imageDataUrl}

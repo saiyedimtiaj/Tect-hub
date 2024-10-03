@@ -2,12 +2,8 @@
 import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/Icons"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { SyntheticEvent } from "react"
-import { useUserRegistation } from "@/hooks/auth.hook"
 import cover from "../../../public/assets/Chemistry Infographic5-01.jpg"
 import RegisterForm from "@/components/form/RegisterForm"
 

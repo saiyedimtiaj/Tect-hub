@@ -62,7 +62,7 @@ const EditProfile: FC<EditProfileProps> = ({ isOpen, onOpenChange }) => {
                 <DialogHeader>
                     <DialogTitle>Edit profile</DialogTitle>
                     <DialogDescription>
-                        Make changes to your profile here. Click save when you're done.
+                        Make changes to your profile here. Click save when you&aposre done.
                     </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleUpdate}>

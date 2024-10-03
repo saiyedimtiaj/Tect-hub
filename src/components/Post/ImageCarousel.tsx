@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/swiper-bundle.css'; // Import Swiper styles
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Image from 'next/image';
 
 interface ImageCarouselProps {
     images: string[];
@@ -25,7 +26,9 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
             >
                 {images?.map((image, index) => (
                     <SwiperSlide key={index}>
-                        <img
+                        <Image
+                            width={500}
+                            height={300}
                             className="w-full h-[240px] md:h-[300px] lg:h-[350px] object-cover rounded-lg"
                             src={image}
                             alt={`Image ${index + 1}`}

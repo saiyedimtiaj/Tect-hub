@@ -22,21 +22,23 @@ const AllPosts = () => {
     const postRefs = useRef<(HTMLDivElement | null)[]>([]);
 
     useEffect(() => {
+        const currentPostRefs = postRefs.current; // Copy postRefs.current into a stable variable
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const index = postRefs.current.indexOf(entry.target as HTMLDivElement);
+                    const index = currentPostRefs.indexOf(entry.target as HTMLDivElement);
                     if (index >= data?.data?.length - 1) {
                         setLimit(prevLimit => prevLimit + 3); // Increment limit to load more posts
                         refetch();
-                        return
+                        return;
                     }
                 }
             });
-        }, { threshold: 0.8 }); // Adjust the threshold as needed
+        }, { threshold: 0.8 });
 
         // Observe each post
-        postRefs.current.forEach(post => {
+        currentPostRefs.forEach(post => {
             if (post) {
                 observer.observe(post);
             }
@@ -44,13 +46,14 @@ const AllPosts = () => {
 
         // Cleanup function to unobserve posts
         return () => {
-            postRefs.current.forEach(post => {
+            currentPostRefs.forEach(post => {
                 if (post) {
                     observer.unobserve(post);
                 }
             });
         };
     }, [data, refetch]);
+
 
     if (isLoading) {
         // Show skeleton loading while fetching data for the first time

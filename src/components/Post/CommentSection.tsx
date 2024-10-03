@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Avatar } from '../ui/avatar';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import Image from 'next/image';
@@ -14,7 +13,7 @@ interface Comment {
     content: string;
 }
 
-const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
+const CommentSection: React.FC<CommentSectionProps> = () => {
     const [comments, setComments] = useState<Comment[]>([
         { id: 1, user: { name: 'Jane Doe', avatar: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png' }, content: 'Nice post!' },
         { id: 2, user: { name: 'John Smith', avatar: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png' }, content: 'Great pictures!' },

@@ -1,7 +1,6 @@
 "use client"
 import { Separator } from "@/components/ui/separator"
 import ImageCarousel from './ImageCarousel';
-import CommentSection from './CommentSection';
 import LikeCommentShare from './LikeCommentShare';
 import Image from 'next/image';
 import { useParams } from "next/navigation";

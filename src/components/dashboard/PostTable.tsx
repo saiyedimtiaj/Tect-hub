@@ -22,7 +22,6 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
 import {
     Table,
     TableBody,
@@ -32,19 +31,16 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import Image from "next/image"
-import { IPost, TUser } from "@/types"
+import { IPost } from "@/types"
 import { Badge } from "@/components/ui/badge"
 import SkeletonRow from "../Scaleton/SkeletonRow"
-import { useUpdateUserRole } from "@/hooks/user.hooks"
 import { CaretSortIcon } from "@radix-ui/react-icons"
-import UserStatusDialog from "../Modal/UserStatusDialog"
-import { useAllPosts } from "@/hooks/post.hooks"
 import DeletePostModal from "../Modal/DeletePostModal"
+import { useAllPosts } from "@/hooks/post.hooks"
 
 
 const PostTable = () => {
-    const { mutate: updateStatus } = useUpdateUserRole()
-    const { data, isLoading, error, refetch } = useAllPosts()
+    const { data, isLoading, error } = useAllPosts()
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
         []
@@ -53,11 +49,9 @@ const PostTable = () => {
         useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = useState({})
     const [dialogOpen, setDialogOpen] = useState(false);
-    const [selectedUserId, setSelectedUserId] = useState<null | string>(null);
 
     const handleOpenModal = (id: string) => {
         setDialogOpen(true);
-        setSelectedUserId(id)
         console.log(id)
     };
 
