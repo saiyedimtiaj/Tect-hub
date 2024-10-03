@@ -20,9 +20,10 @@ import { useUpdateUser } from "@/hooks/auth.hook";
 interface EditProfileProps {
     isOpen: boolean;
     onOpenChange: (open: boolean) => void;
+    refetch: any
 }
 
-const EditProfile: FC<EditProfileProps> = ({ isOpen, onOpenChange }) => {
+const EditProfile: FC<EditProfileProps> = ({ isOpen, onOpenChange, refetch }) => {
     const { user } = useUser();
     const [image, setImage] = useState<string | undefined>(user?.profile);
     const [file, setFile] = useState<File | null>();
@@ -52,7 +53,11 @@ const EditProfile: FC<EditProfileProps> = ({ isOpen, onOpenChange }) => {
         const name = (form.elements.namedItem('name') as HTMLInputElement).value
         const bio = (form.elements.namedItem('bio') as HTMLInputElement).value
 
-        updateUser({ name, profile, bio, _id: user?._id })
+        updateUser({ name, profile, bio, _id: user?._id }, {
+            onSuccess: () => {
+                refetch()
+            }
+        })
         onOpenChange(false)
     }
 

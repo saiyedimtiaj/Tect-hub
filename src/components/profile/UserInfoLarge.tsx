@@ -13,7 +13,7 @@ import badge from "../../../public/assets/stamp.png"
 const UserInfoLarge: React.FC = () => {
     const [isEditProfileOpen, setEditProfileOpen] = useState<boolean>(false);
     const [isPostOpen, setIsPostOpen] = useState<boolean>(false);
-    const { data, isLoading } = useGetUser()
+    const { data, isLoading, refetch } = useGetUser()
 
     const user = data?.data
 
@@ -44,8 +44,8 @@ const UserInfoLarge: React.FC = () => {
 
                     <div className="flex flex-col justify-center items-center mt-4 w-full px-4">
                         {/* User Info */}
-                        <div className="text-center">
-                            <h1 className="text-2xl flex items-center gap-2 sm:text-3xl md:text-4xl font-bold text-gray-900 pb-2">{user?.name || "User Name"}
+                        <div className="text-center flex justify-center flex-col gap-y-2">
+                            <h1 className="text-2xl flex items-center justify-center gap-2 sm:text-3xl md:text-4xl font-bold text-gray-900 pb-2">{user?.name || "User Name"}
                                 {
                                     user?.membershipEnd && !isTimeOut && <Image
                                         width={60}
@@ -91,7 +91,7 @@ const UserInfoLarge: React.FC = () => {
                             </button>
                         </div>
                     </div>
-                    <EditProfile isOpen={isEditProfileOpen} onOpenChange={setEditProfileOpen} />
+                    <EditProfile isOpen={isEditProfileOpen} onOpenChange={setEditProfileOpen} refetch={refetch} />
                     <AddPost isOpen={isPostOpen} onOpenChange={setIsPostOpen} />
                 </div>
             </div>
