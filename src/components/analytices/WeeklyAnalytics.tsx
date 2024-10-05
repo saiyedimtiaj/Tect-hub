@@ -16,12 +16,16 @@ const WeeklyAnalytics = () => {
         month: item.week,
         desktop: item.count,
     })) || [];
+    const voatData = data?.data?.voat?.map((item: { week: string, count: number }) => ({
+        month: item.week,
+        desktop: item.count,
+    })) || [];
 
 
     return (
         isLoading ? <Loading /> : <div className="mt-6">
             <main className="flex flex-1 flex-col gap-4 md:gap-8">
-                <AnalyticesCards post={data?.data?.postCount} comment={data?.data?.commentCount} />
+                <AnalyticesCards voat={data?.data?.voatCount} post={data?.data?.postCount} comment={data?.data?.commentCount} />
 
             </main>
             <div className='mt-4'>
@@ -32,7 +36,7 @@ const WeeklyAnalytics = () => {
                     <AnalyticesBarChart title='Comment Chart' label='Comment' header='Showing total comment for the last 5 week' postData={commentData} />
                 </div>
                 <div className='mt-4'>
-                    <AnalyticesLineChart title='Post Chart' label='post' header='Showing total visitors for the last 5 week' postData={postData} />
+                    <AnalyticesLineChart title='Voat Chart' label='voat' header='Showing total voat for the last 5 week' postData={voatData} />
                 </div>
             </div>
         </div>

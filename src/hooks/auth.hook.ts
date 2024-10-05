@@ -66,7 +66,7 @@ export const useLogOut = () => {
   return useMutation({
     mutationKey: ["USER_LOGOUT"],
     mutationFn: async () => await logoutUser(),
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success("user log out sucessful!");
     },
     onError: (error) => {
