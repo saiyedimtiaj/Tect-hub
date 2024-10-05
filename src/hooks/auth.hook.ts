@@ -5,6 +5,7 @@ import {
   getUserInfo,
   getUserProfile,
   logInUser,
+  logoutUser,
   updateUser,
 } from "@/services/auth.services";
 import { TCreateUser, TLoginUser } from "@/types";
@@ -56,6 +57,19 @@ export const useUserLogin = () => {
     },
     onError: (error) => {
       console.log(error);
+      toast.error(error.message);
+    },
+  });
+};
+
+export const useLogOut = () => {
+  return useMutation({
+    mutationKey: ["USER_LOGOUT"],
+    mutationFn: async () => await logoutUser(),
+    onSuccess: (data) => {
+      toast.success("user log out sucessful!");
+    },
+    onError: (error) => {
       toast.error(error.message);
     },
   });

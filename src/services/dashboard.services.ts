@@ -26,3 +26,28 @@ export const getPostAnalyticsData = async () => {
     throw new Error(err);
   }
 };
+
+export const getWeeklyAnalyticsData = async () => {
+  try {
+    const { data } = await axiosInstance.get(`/dashboard/user/weekly`);
+    return data;
+  } catch (err: any) {
+    throw new Error(err);
+  }
+};
+export const getMonthlyAnalyticsData = async () => {
+  try {
+    const { data } = await axiosInstance.get(`/dashboard/user/monthly`);
+    return data;
+  } catch (err: any) {
+    throw new Error(err);
+  }
+};
+export const getDailyAnalyticsData = async () => {
+  try {
+    const { data } = await axiosInstance.get(`/dashboard/user/daily`);
+    return data;
+  } catch (err: any) {
+    throw new Error(err);
+  }
+};

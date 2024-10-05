@@ -4,8 +4,11 @@ import React from 'react';
 import { motion } from 'framer-motion'; // Import Framer Motion
 import banner from '../../../public/assets/08-01.jpg';
 import ExploreButton from '../ClientComponent/ExploreButton';
+import { useUser } from '@/provider/user.provider';
+import Link from 'next/link';
 
 const Banner = () => {
+    const { user } = useUser()
     return (
         <section className="relative text-white min-h-[calc(100vh-90px)] pb-[10px] flex items-center justify-center">
             {/* Background Image with Opacity */}
@@ -43,13 +46,25 @@ const Banner = () => {
                 </motion.p>
 
                 {/* Animated Explore Button */}
-                <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                >
-                    <ExploreButton />
-                </motion.div>
+                {
+                    user ? <Link href="/news-feed">
+                        <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ duration: 0.8, delay: 0.4 }}
+                        >
+                            <ExploreButton />
+                        </motion.div>
+                    </Link> : <Link href="/signin">
+                        <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ duration: 0.8, delay: 0.4 }}
+                        >
+                            <ExploreButton />
+                        </motion.div>
+                    </Link>
+                }
             </div>
         </section>
     );

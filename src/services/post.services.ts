@@ -64,3 +64,12 @@ export const searchPost = async (searchTerm: string) => {
     throw new Error(err);
   }
 };
+
+export const getAdminAllPost = async () => {
+  try {
+    const { data } = await axiosInstance.get(`/post/admin/all-posts`);
+    return data;
+  } catch (err: any) {
+    throw new Error(err);
+  }
+};

@@ -36,11 +36,11 @@ import { Badge } from "@/components/ui/badge"
 import SkeletonRow from "../Scaleton/SkeletonRow"
 import { CaretSortIcon } from "@radix-ui/react-icons"
 import DeletePostModal from "../Modal/DeletePostModal"
-import { useAllPosts } from "@/hooks/post.hooks"
+import { useDeletePost, useGetAllAdminPost } from "@/hooks/post.hooks"
 
 
 const PostTable = () => {
-    const { data, isLoading, error } = useAllPosts()
+    const { data, isLoading, error, refetch } = useGetAllAdminPost()
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
         []
@@ -49,14 +49,20 @@ const PostTable = () => {
         useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = useState({})
     const [dialogOpen, setDialogOpen] = useState(false);
+    const { mutate: deletePost } = useDeletePost();
+    const [postId, setPostId] = useState('')
 
     const handleOpenModal = (id: string) => {
         setDialogOpen(true);
-        console.log(id)
+        setPostId(id)
     };
 
     const handelDelete = () => {
-
+        deletePost(postId as string, {
+            onSuccess: () => {
+                refetch()
+            }
+        });
     };
 
 

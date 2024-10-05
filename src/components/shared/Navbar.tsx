@@ -11,14 +11,15 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
-import { logoutUser } from "@/services/auth.services";
 import logo from "../../../public/assets/download.svg";
 import { ImSwitch } from "react-icons/im";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
+import { useLogOut } from "@/hooks/auth.hook";
 
 export default function Navbar() {
     const { user, setIsLoading } = useUser();
+    const { mutate: logout } = useLogOut()
     const pathname = usePathname();
 
     const commonRoute = ["/about", "/contact"];
@@ -26,13 +27,13 @@ export default function Navbar() {
 
     const handleLogout = async () => {
         if (commonRoute.includes(pathname)) {
-            await logoutUser();
+            logout()
             setIsLoading(true);
             return;
         } else {
-            await logoutUser();
-            router.push("/");
+            logout()
             setIsLoading(true);
+            router.push("/");
         }
     };
 
@@ -62,6 +63,12 @@ export default function Navbar() {
                 <button className="bg-[#0F6FEC] text-white font-medium w-full text-sm py-2 rounded-md">
                     <Link href="/profile" className="block w-full text-center">Profile</Link>
                 </button>
+                <>
+                    <DropdownMenuSeparator />
+                    <button className="bg-gray-100 dark:bg-gray-700 font-medium w-full text-sm py-2 rounded-md">
+                        <Link href="/profile/analytics" className="block w-full text-center">Analytics</Link>
+                    </button>
+                </>
                 {user?.role === "admin" && (
                     <>
                         <DropdownMenuSeparator />

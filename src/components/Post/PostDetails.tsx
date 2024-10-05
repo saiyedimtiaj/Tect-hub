@@ -1,12 +1,10 @@
 "use client"
-import { Separator } from "@/components/ui/separator"
 import ImageCarousel from './ImageCarousel';
 import LikeCommentShare from './LikeCommentShare';
 import Image from 'next/image';
 import { useParams } from "next/navigation";
 import { useGetSinglePosts } from "@/hooks/post.hooks";
 import Loading from "../shared/Loading";
-import ShowContent from "../ClientComponent/ShowContent";
 
 const PostDetails = () => {
     const { id } = useParams();
@@ -34,17 +32,7 @@ const PostDetails = () => {
                     </div>
                 </div>
 
-                <div className="mb-5">
-                    {
-                        data?.data?.content && <ShowContent content={data?.data?.content} />
-                    }
-                </div>
-
-                <div>
-                    <Separator className="mb-2" />
-                </div>
-
-                <LikeCommentShare postId={data?.data?._id} />
+                <LikeCommentShare postId={data?.data?._id} content={data?.data?.content} />
             </div>
         </div>
     );

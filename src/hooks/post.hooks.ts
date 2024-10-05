@@ -1,6 +1,7 @@
 import {
   createPost,
   deletePost,
+  getAdminAllPost,
   getAllPosts,
   getMyPosts,
   getSinglePosts,
@@ -68,5 +69,12 @@ export const useGetSearchItem = () => {
     onError: (error) => {
       toast.error(error.message);
     },
+  });
+};
+
+export const useGetAllAdminPost = () => {
+  return useQuery({
+    queryKey: ["ADMIN_POST"],
+    queryFn: async () => await getAdminAllPost(),
   });
 };

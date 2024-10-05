@@ -66,7 +66,7 @@ const UserTable = () => {
         if (selectedUser?._id) {
             const payloed = {
                 id: selectedUser?._id,
-                status: selectedUser?.status === "active" ? "block" : "active"
+                status: selectedUser?.status === "unblock" ? "block" : "unblock"
             }
             updateStatus(payloed, {
                 onSuccess: () => {
@@ -133,16 +133,16 @@ const UserTable = () => {
         },
         {
             accessorKey: "status",
-            header: () => <div className="text-left">Status</div>,
+            header: () => <div>Status</div>,
             cell: ({ row }) => {
                 const user = row.original;
                 return (
                     <Button
                         variant="link"
                         onClick={() => handleStatusClick(user)}
-                        className="text-left font-medium"
+                        className="font-medium"
                     >
-                        <Badge className={user.status === "active" ? "bg-green-500" : "bg-red-500"}>
+                        <Badge className={user.status === "unblock" ? "bg-green-500" : "bg-red-500"}>
                             {user.status}
                         </Badge>
                     </Button>
@@ -150,7 +150,7 @@ const UserTable = () => {
             },
         },
         {
-            accessorKey: "status",
+            accessorKey: "role",
             header: () => <div className="">Role</div>,
             cell: ({ row }) => {
                 const user = row.original;
@@ -162,10 +162,29 @@ const UserTable = () => {
             },
         },
         {
-            accessorKey: "createdAt",
-            header: () => <div className="text-left">Joined At</div>,
+            accessorKey: "lastLogin",
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        LogIn At
+                        <CaretSortIcon className="ml-2 h-4 w-4" />
+                    </Button>
+                )
+            },
+        },
+        {
+            accessorKey: "Active",
+            header: () => <div className="">Activation</div>,
             cell: ({ row }) => {
-                return <div className="text-left font-medium">{row.getValue("createdAt")}</div>
+                const user = row.original;
+                return (
+                    <Badge className={user.isLoggedIn ? "bg-blue-500 hover:bg-purple-500" : "bg-red-500 hover:bg-red-500"}>
+                        {user.isLoggedIn ? "acive" : "deactive"}
+                    </Badge>
+                );
             },
         },
     ]

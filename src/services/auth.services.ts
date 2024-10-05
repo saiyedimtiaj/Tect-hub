@@ -77,8 +77,15 @@ export const getCurrentUser = async () => {
 };
 
 export const logoutUser = async () => {
-  cookies().delete("accessToken");
-  cookies().delete("refreshToken");
+  try {
+    const { data } = await axiosInstance.post("/auth/logout");
+    if (data?.success) {
+      cookies().delete("accessToken");
+      cookies().delete("refreshToken");
+    }
+  } catch (err: any) {
+    throw new Error(err);
+  }
 };
 
 export const updateUser = async (userData: any) => {

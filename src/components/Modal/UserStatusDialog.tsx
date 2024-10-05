@@ -26,7 +26,7 @@ const UserStatusDialog: React.FC<UserStatusDialogProps> = ({ isOpen, onClose, on
                     <p className="text-sm text-gray-600 dark:text-gray-400">
                         You are about to change the status of this user to
                         <span className={cn(selectedUser.status === "block" ? "text-red-500" : "text-green-500", "font-semibold")}>
-                            {` ${selectedUser.status === "active" ? "block" : "active"}`}
+                            {` ${selectedUser.status === "unblock" ? "block" : "unblock"}`}
                         </span>. Please confirm.
                     </p>
                 </DialogHeader>

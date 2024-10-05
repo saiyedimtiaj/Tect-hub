@@ -19,6 +19,8 @@ export type TUser = {
   bio: string;
   membershipEnd: Date;
   status: string;
+  isLoggedIn: boolean;
+  lastLogin: Date;
 };
 
 export interface IPost {
@@ -83,7 +85,13 @@ export interface UserDetails {
 
 export interface TMostLikePost {
   _id: string;
-  totalLikes: number;
-  postDetails: PostDetails;
-  userDetails: UserDetails;
+  content: string;
+  userId: TUser;
+  images: string[];
+  category: string;
+  type: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  likeCount: number;
 }
