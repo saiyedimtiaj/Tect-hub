@@ -93,7 +93,7 @@ const AllPosts = () => {
                     </div>
                 </div>
             </div>
-            <div className="lg:hidden block">
+            <div className="lg:hidden block mt-3">
                 <Slider />
             </div>
             <div>

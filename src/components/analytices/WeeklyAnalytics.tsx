@@ -32,10 +32,10 @@ const WeeklyAnalytics = () => {
                 <AnalyticesLineChart title='Post Chart' label='post' header='Showing total Post for the last 5 week' postData={postData} />
             </div>
             <div className='mt-5 mb-8 flex items-center flex-col lg:flex-row gap-5'>
-                <div className='mt-4'>
+                <div className='mt-4 lg:w-1/2 w-full'>
                     <AnalyticesBarChart title='Comment Chart' label='Comment' header='Showing total comment for the last 5 week' postData={commentData} />
                 </div>
-                <div className='mt-4'>
+                <div className='mt-4 lg:w-1/2 w-full'>
                     <AnalyticesLineChart title='Voat Chart' label='voat' header='Showing total voat for the last 5 week' postData={voatData} />
                 </div>
             </div>
